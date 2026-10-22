@@ -1,87 +1,102 @@
+```javascript
+require('dotenv').config();
 const express = require('express');
-const app = express();
-const port = process.env.PORT || 3000;
+const { Pool } = require('pg');
 
+const app = express();
 app.use(express.json());
 
-// Simulation de base de données
-let baskets = [
-    { id: 1, shopName: "Boulangerie du Palais", items: "Viennoiseries", price: 2500, neighborhood: "Bastos", stock: 5 },
-    { id: 2, shopName: "Supermarché Golf", items: "Fruits et Légumes", price: 3000, neighborhood: "Golf", stock: 3 },
-    { id: 3, shopName: "Resto Omnisport", items: "Plats cuisinés", price: 2000, neighborhood: "Omnisport", stock: 8 },
-    { id: 4, shopName: "Casino Bastos", items: "Produits laitiers", price: 4000, neighborhood: "Bastos", stock: 2 }
-];
+// Configuration de la connexion PostgreSQL
+const pool = new Pool({
+  user: process.env.DB_USER || 'postgres',
+  host: process.env.DB_HOST || 'localhost',
+  database: process.env.DB_NAME || 'savebite_yaounde',
+  password: process.env.DB_PASSWORD || 'password',
+  port: process.env.DB_PORT || 5432,
+});
 
-let orders = [];
+/**
+ * 1. GET /api/bags
+ * Récupère les paniers disponibles avec filtrage par quartier de Yaoundé
+ * Quartiers attendus : Bastos, Golf, Omnisport, Mokolo, Tsinga, etc.
+ */
+app.get('/api/bags', async (req, res) => {
+  const { neighborhood } = req.query;
+  try {
+    let query = 'SELECT * FROM bags WHERE status = $1';
+    let values = ['available'];
 
-// 1. Lister les paniers par quartier
-app.get('/api/baskets/:neighborhood', (req, res) => {
-    const neighborhood = req.params.neighborhood.toLowerCase();
-    const filteredBaskets = baskets.filter(b => b.neighborhood.toLowerCase() === neighborhood);
+    if (neighborhood) {
+      query += ' AND neighborhood = $2';
+      values.push(neighborhood);
+    }
+
+    const result = await pool.query(query, values);
+    res.status(200).json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: 'Erreur lors de la récupération des paniers' });
+  }
+});
+
+/**
+ * 2. POST /api/orders
+ * Crée une commande pour un panier anti-gaspillage
+ */
+app.post('/api/orders', async (req, res) => {
+  const { bag_id, customer_name, customer_phone, quantity } = req.body;
+
+  if (!bag_id || !customer_phone) {
+    return res.status(400).json({ error: 'Données manquantes' });
+  }
+
+  try {
+    const query = `
+      INSERT INTO orders (bag_id, customer_name, customer_phone, quantity, status, created_at)
+      VALUES ($1, $2, $3, $4, $5, NOW()) RETURNING *
+    `;
+    const values = [bag_id, customer_name, customer_phone, quantity || 1, 'pending'];
+    const result = await pool.query(query, values);
     
-    if (filteredBaskets.length === 0) {
-        return res.status(404).json({ message: "Aucun panier trouvé dans ce quartier." });
-    }
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: 'Erreur lors de la création de la commande' });
+  }
+});
+
+/**
+ * 3. POST /api/payments/webhook
+ * Callback pour les notifications de paiement (MTN MoMo / Orange Money)
+ */
+app.post('/api/payments/webhook', async (req, res) => {
+  const { transactionId, externalId, status, amount, currency } = req.body;
+
+  // Note: Dans un cas réel, vérifiez ici la signature/token de sécurité du fournisseur (ex: Campay, Monkap, etc.)
+  
+  try {
+    const orderStatus = status === 'SUCCESSFUL' ? 'paid' : 'failed';
     
-    res.json(filteredBaskets);
-});
+    // Mise à jour de la commande basée sur l'ID externe (externalId correspond à notre order_id)
+    const updateQuery = 'UPDATE orders SET status = $1, transaction_id = $2 WHERE id = $3 RETURNING *';
+    const result = await pool.query(updateQuery, [orderStatus, transactionId, externalId]);
 
-// 2. Créer une commande
-app.post('/api/orders', (req, res) => {
-    const { basketId, customerPhone, customerName, paymentMethod } = req.body;
-
-    const basket = baskets.find(b => b.id === basketId);
-    if (!basket || basket.stock <= 0) {
-        return res.status(400).json({ error: "Panier non disponible ou épuisé." });
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: 'Commande non trouvée' });
     }
 
-    const newOrder = {
-        id: `ORD-${Date.now()}`,
-        basketId,
-        customerPhone,
-        customerName,
-        paymentMethod, // 'MTN' ou 'ORANGE'
-        amount: basket.price,
-        status: 'PENDING_PAYMENT',
-        createdAt: new Date()
-    };
-
-    orders.push(newOrder);
-    basket.stock -= 1;
-
-    // Simulation d'initialisation de paiement vers un agrégateur (ex: CinetPay, MonCash, Maviance)
-    res.status(201).json({
-        message: "Commande créée, en attente de paiement.",
-        orderId: newOrder.id,
-        paymentInstructions: `Veuillez valider le prompt sur votre téléphone ${customerPhone}`
-    });
-});
-
-// 3. Webhook de confirmation de paiement (MTN MoMo / Orange Money)
-app.post('/api/webhooks/payment', (req, res) => {
-    const { status, transaction_id, external_reference, operator } = req.body;
-
-    // external_reference correspondrait à notre orderId
-    const orderIndex = orders.findIndex(o => o.id === external_reference);
-
-    if (orderIndex !== -1) {
-        if (status === 'SUCCESSFUL' || status === 'ACCEPTED') {
-            orders[orderIndex].status = 'PAID';
-            orders[orderIndex].transactionId = transaction_id;
-            console.log(`Paiement confirmé pour la commande ${external_reference} via ${operator}`);
-        } else {
-            orders[orderIndex].status = 'FAILED';
-            // Replacer le stock si échec
-            const basket = baskets.find(b => b.id === orders[orderIndex].basketId);
-            if (basket) basket.stock += 1;
-        }
-        
-        return res.status(200).send('Webhook processed');
+    // Si payé, on peut aussi décrémenter le stock du panier
+    if (orderStatus === 'paid') {
+      await pool.query('UPDATE bags SET quantity = quantity - 1 WHERE id = (SELECT bag_id FROM orders WHERE id = $1)', [externalId]);
     }
 
-    res.status(404).send('Order not found');
+    res.status(200).json({ message: 'Webhook traité avec succès' });
+  } catch (err) {
+    console.error('Webhook Error:', err);
+    res.status(500).json({ error: 'Erreur lors du traitement du paiement' });
+  }
 });
 
-app.listen(port, () => {
-    console.log(`SaveBite API running on port ${port}`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`SaveBite Yaoundé API tournant sur le port ${PORT}`);
 });
+```
