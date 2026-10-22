@@ -1,0 +1,285 @@
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaveBite Yaoundé - Sauvez des délices, évitez le gaspillage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        creme: '#FDFBF7',
+                        caramel: '#C87D53',
+                        sauge: '#8A9A86',
+                        saugeDark: '#6B7A68',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+        body { font-family: 'Outfit', sans-serif; background-color: #FDFBF7; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="text-gray-800 pb-24">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-creme/90 backdrop-blur-md border-b border-gray-100 px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+            <div class="bg-sauge p-2 rounded-xl text-white">
+                <i class="fa-solid fa-leaf text-xl"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-xl tracking-tight text-saugeDark">SaveBite</h1>
+                <p class="text-[10px] uppercase tracking-widest text-caramel font-bold">Yaoundé</p>
+            </div>
+        </div>
+        <button class="bg-white shadow-sm border border-gray-100 rounded-full px-4 py-2 text-sm flex items-center gap-2 font-medium">
+            <i class="fa-solid fa-location-dot text-sauge"></i>
+            Bastos, Yaoundé
+        </button>
+    </header>
+
+    <!-- Hero / Stats -->
+    <section class="px-4 py-6">
+        <div class="bg-sauge text-white rounded-3xl p-6 relative overflow-hidden shadow-lg shadow-sauge/20">
+            <div class="relative z-10">
+                <h2 class="text-2xl font-bold mb-1">Paniers sauvés aujourd'hui</h2>
+                <div class="flex items-baseline gap-2">
+                    <span class="text-4xl font-black">1,248</span>
+                    <span class="text-sm opacity-90 text-creme">repas à Yaoundé</span>
+                </div>
+                <div class="mt-4 flex gap-2">
+                    <span class="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold">📍 12 Quartiers actifs</span>
+                </div>
+            </div>
+            <i class="fa-solid fa-utensils absolute -right-4 -bottom-4 text-8xl opacity-10 rotate-12"></i>
+        </div>
+    </section>
+
+    <!-- Neighborhood Filters -->
+    <div class="px-4 mb-6">
+        <div class="flex gap-3 overflow-x-auto hide-scrollbar py-2">
+            <button class="whitespace-nowrap bg-caramel text-white px-5 py-2 rounded-full font-medium shadow-md shadow-caramel/20">Tous</button>
+            <button class="whitespace-nowrap bg-white border border-gray-200 px-5 py-2 rounded-full font-medium hover:border-sauge">Bastos</button>
+            <button class="whitespace-nowrap bg-white border border-gray-200 px-5 py-2 rounded-full font-medium hover:border-sauge">Golf</button>
+            <button class="whitespace-nowrap bg-white border border-gray-200 px-5 py-2 rounded-full font-medium hover:border-sauge">Omnisport</button>
+            <button class="whitespace-nowrap bg-white border border-gray-200 px-5 py-2 rounded-full font-medium hover:border-sauge">Mokolo</button>
+        </div>
+    </div>
+
+    <!-- Main Content: Cards -->
+    <main class="px-4 space-y-8">
+        
+        <!-- Category: Boulangeries -->
+        <div>
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-800">Petit-déjeuner & Goûter</h3>
+                <a href="#" class="text-caramel text-sm font-semibold">Voir tout</a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Card 1: Acropole -->
+                <div class="group relative bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-50" onclick="openModal('Acropole Bastos', 'Panier Surprise Viennoiseries', '2 500')">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=800" alt="Boulangerie" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-saugeDark">
+                            <i class="fa-solid fa-clock mr-1"></i> Collecte: 17:30 - 18:30
+                        </div>
+                        <div class="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold animate-pulse">
+                            Plus que 3 restants
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <img src="https://ui-avatars.com/api/?name=Acropole&background=C87D53&color=fff" class="w-12 h-12 rounded-2xl border-2 border-white shadow-lg" alt="Logo">
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-1">
+                            <h4 class="font-bold text-lg">Acropole Bastos</h4>
+                            <div class="flex items-center text-yellow-500 text-sm">
+                                <i class="fa-solid fa-star mr-1"></i> 4.8
+                            </div>
+                        </div>
+                        <p class="text-gray-500 text-sm mb-4">Panier Surprise Viennoiseries & Pains</p>
+                        <div class="flex items-center justify-between border-t pt-4">
+                            <div class="flex flex-col">
+                                <span class="text-gray-400 line-through text-xs">7 500 FCFA</span>
+                                <span class="text-xl font-black text-saugeDark">2 500 FCFA</span>
+                            </div>
+                            <button class="bg-sauge text-white px-6 py-2.5 rounded-2xl font-bold hover:bg-saugeDark transition-colors">Réserver</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Select Omnisport -->
+                <div class="group relative bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-50" onclick="openModal('Pâtisserie Select', 'Mignardises Sucrées', '3 000')">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&q=80&w=800" alt="Pâtisserie" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-saugeDark">
+                            <i class="fa-solid fa-clock mr-1"></i> Collecte: 19:00 - 20:00
+                        </div>
+                        <div class="absolute top-4 right-4 bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+                            5 restants
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <img src="https://ui-avatars.com/api/?name=Select&background=8A9A86&color=fff" class="w-12 h-12 rounded-2xl border-2 border-white shadow-lg" alt="Logo">
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-1">
+                            <h4 class="font-bold text-lg">Pâtisserie Select</h4>
+                            <div class="flex items-center text-yellow-500 text-sm">
+                                <i class="fa-solid fa-star mr-1"></i> 4.5
+                            </div>
+                        </div>
+                        <p class="text-gray-500 text-sm mb-4">Omnisport • Gâteaux & Tartes du jour</p>
+                        <div class="flex items-center justify-between border-t pt-4">
+                            <div class="flex flex-col">
+                                <span class="text-gray-400 line-through text-xs">9 000 FCFA</span>
+                                <span class="text-xl font-black text-saugeDark">3 000 FCFA</span>
+                            </div>
+                            <button class="bg-sauge text-white px-6 py-2.5 rounded-2xl font-bold hover:bg-saugeDark transition-colors">Réserver</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category: Restaurants -->
+        <div>
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-800">Repas Complets</h3>
+                <a href="#" class="text-caramel text-sm font-semibold">Voir tout</a>
+            </div>
+            <!-- Card 3: Le Moulin de France -->
+            <div class="group relative bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-50" onclick="openModal('Moulin de France', 'Déjeuner Gourmet', '4 500')">
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=800" alt="Restaurant" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4 bg-saugeDark text-white px-3 py-1 rounded-full text-xs font-bold">
+                        Dernière chance !
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6 text-white">
+                        <p class="text-xs font-medium uppercase tracking-widest opacity-80">Golf / Bastos</p>
+                        <h4 class="text-xl font-bold">Le Moulin de France</h4>
+                    </div>
+                </div>
+                <div class="p-5 flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm">Panier Repas Chaud Equilibré</p>
+                        <div class="flex items-center gap-2 mt-1">
+                            <span class="text-saugeDark font-black text-lg">4 500 FCFA</span>
+                            <span class="text-gray-400 line-through text-xs italic text-opacity-70">12 000 FCFA</span>
+                        </div>
+                    </div>
+                    <div class="bg-creme p-3 rounded-2xl text-caramel">
+                        <i class="fa-solid fa-basket-shopping text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 px-6 py-4 flex justify-between items-center z-50">
+        <button class="flex flex-col items-center gap-1 text-saugeDark">
+            <i class="fa-solid fa-magnifying-glass text-xl"></i>
+            <span class="text-[10px] font-bold uppercase">Découvrir</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-gray-400">
+            <i class="fa-solid fa-heart text-xl"></i>
+            <span class="text-[10px] font-bold uppercase">Favoris</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-gray-400">
+            <i class="fa-solid fa-receipt text-xl"></i>
+            <span class="text-[10px] font-bold uppercase">Commandes</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-gray-400">
+            <i class="fa-solid fa-user text-xl"></i>
+            <span class="text-[10px] font-bold uppercase">Profil</span>
+        </button>
+    </nav>
+
+    <!-- Payment Modal (Mobile Money) -->
+    <div id="paymentModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] hidden flex items-end sm:items-center justify-center transition-all duration-300">
+        <div class="bg-white w-full max-w-md rounded-t-[2.5rem] sm:rounded-[2.5rem] p-8 animate-slide-up">
+            <div class="w-12 h-1 bg-gray-200 rounded-full mx-auto mb-6"></div>
+            <h3 class="text-2xl font-bold mb-2 text-center" id="modalStoreName">Store Name</h3>
+            <p class="text-gray-500 text-center mb-6" id="modalItemName">Item description goes here</p>
+            
+            <div class="bg-creme rounded-2xl p-4 mb-6 flex justify-between items-center">
+                <span class="font-medium">Total à payer</span>
+                <span class="text-2xl font-black text-saugeDark" id="modalPrice">0 FCFA</span>
+            </div>
+
+            <p class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Paiement Mobile Money</p>
+            <div class="grid grid-cols-1 gap-3">
+                <button onclick="confirmPayment('Orange')" class="flex items-center justify-between bg-white border-2 border-orange-500 p-4 rounded-2xl hover:bg-orange-50 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center text-white font-black">OM</div>
+                        <span class="font-bold">Orange Money</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-orange-500"></i>
+                </button>
+                <button onclick="confirmPayment('MTN')" class="flex items-center justify-between bg-white border-2 border-yellow-400 p-4 rounded-2xl hover:bg-yellow-50 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center text-blue-900 font-black">MoMo</div>
+                        <span class="font-bold">MTN MoMo</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-yellow-500"></i>
+                </button>
+            </div>
+
+            <button onclick="closeModal()" class="w-full mt-6 py-4 text-gray-400 font-semibold hover:text-gray-600 transition-colors">Annuler</button>
+        </div>
+    </div>
+
+    <script>
+        function openModal(store, item, price) {
+            document.getElementById('modalStoreName').innerText = store;
+            document.getElementById('modalItemName').innerText = item;
+            document.getElementById('modalPrice').innerText = price + ' FCFA';
+            document.getElementById('paymentModal').classList.remove('hidden');
+            document.getElementById('paymentModal').classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('paymentModal').classList.add('hidden');
+            document.getElementById('paymentModal').classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        function confirmPayment(provider) {
+            alert(`Initiation du paiement ${provider} Money... Entrez votre code PIN sur votre téléphone.`);
+            closeModal();
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            let modal = document.getElementById('paymentModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+
+    <style>
+        @keyframes slide-up {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        .animate-slide-up {
+            animation: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+    </style>
+
+</body>
+</html>
+```
