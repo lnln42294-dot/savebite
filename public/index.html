@@ -4,354 +4,251 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SaveBite - Anti-Gaspi</title>
+    <title>SaveBite - Sauvez des délices, évitez le gaspillage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        :root {
-            --creme: #FDFBF7;
-            --caramel: #C87D53;
-            --sauge: #8A9A86;
-            --noir: #2D2D2D;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        
         body {
-            background-color: var(--creme);
-            color: var(--noir);
-            padding-bottom: 80px;
+            font-family: 'Poppins', sans-serif;
+            background-color: #FDFBF7;
+            color: #4A4A4A;
         }
 
-        header {
-            background-color: white;
-            padding: 1rem;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+        .bg-cream { background-color: #FDFBF7; }
+        .bg-caramel { background-color: #C87D53; }
+        .text-caramel { color: #C87D53; }
+        .bg-sauge { background-color: #8A9A86; }
+        .text-sauge { color: #8A9A86; }
+        .border-caramel { border-color: #C87D53; }
+
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
         }
 
-        header h1 {
-            color: var(--caramel);
-            font-size: 1.5rem;
-            font-weight: 800;
+        .qr-placeholder {
+            background: repeating-conic-gradient(#f0f0f0 0% 25%, #fff 0% 50%) 50% / 20px 20px;
         }
 
-        .container {
-            padding: 15px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Onglets */
-        .tab-content {
-            display: none;
-        }
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Cartes Boutiques */
-        .card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            border: 1px solid #eee;
-        }
-
-        .card-img {
-            width: 100%;
-            height: 150px;
-            background-color: #ddd;
-            object-fit: cover;
-        }
-
-        .card-body {
-            padding: 15px;
-        }
-
-        .card-tag {
-            background-color: var(--sauge);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 5px;
-            font-size: 0.8rem;
-            display: inline-block;
-            margin-bottom: 10px;
-        }
-
-        .card-title {
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-        }
-
-        .card-price {
-            color: var(--caramel);
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .btn-detail {
-            background-color: var(--caramel);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            width: 100%;
-            margin-top: 10px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        /* Section Commandes & QR Code */
-        .order-active {
-            text-align: center;
-            background: white;
-            padding: 25px;
-            border-radius: 20px;
-            border: 2px dashed var(--caramel);
-        }
-
-        .qr-container {
-            margin: 20px auto;
-            padding: 15px;
-            background: white;
-            display: inline-block;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .qr-container img {
-            display: block;
-        }
-
-        .order-status {
-            color: var(--sauge);
-            font-weight: bold;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
-
-        .order-id {
-            font-size: 0.8rem;
-            color: #888;
-            margin-top: 10px;
-        }
-
-        /* Navigation basse */
-        nav.bottom-nav {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background: white;
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 0;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-            z-index: 100;
-        }
-
-        .nav-item {
-            text-align: center;
-            color: #ccc;
-            cursor: pointer;
-            flex: 1;
-        }
-
-        .nav-item.active {
-            color: var(--caramel);
-        }
-
-        .nav-item i {
-            font-size: 1.2rem;
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-        }
-
-        .modal-content {
-            background-color: var(--creme);
-            margin: 15% auto;
-            padding: 20px;
-            width: 90%;
-            max-width: 400px;
-            border-radius: 20px;
-            position: relative;
-        }
-
-        .close-modal {
-            position: absolute;
-            right: 15px;
-            top: 15px;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 50px 20px;
-            color: #888;
+        .btn-hover:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+            transition: all 0.2s;
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen">
 
-<header>
-    <h1>SaveBite</h1>
-</header>
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-leaf text-sauge text-2xl"></i>
+                <span class="text-2xl font-bold text-caramel">SaveBite</span>
+            </div>
+            <div class="hidden md:flex gap-8 font-medium">
+                <a href="#" class="hover:text-caramel">Accueil</a>
+                <a href="#" class="hover:text-caramel">Commerces</a>
+                <a href="#" class="hover:text-caramel">Mes Commandes</a>
+            </div>
+            <button class="bg-sauge text-white px-6 py-2 rounded-full font-semibold btn-hover">Connexion</button>
+        </div>
+    </nav>
 
-<div class="container">
-    <!-- ONGLET BOUTIQUE -->
-    <div id="tab-boutique" class="tab-content active">
-        <h2 style="margin-bottom: 20px;">Paniers disponibles</h2>
-        
-        <div class="card" onclick="openModal('Boulangerie Louise', 'Panier Surprise Salé/Sucré', '4.99€', 'Louise-001')">
-            <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80" class="card-img" alt="Boulangerie">
-            <div class="card-body">
-                <span class="card-tag">À récupérer avant 19h</span>
-                <div class="card-title">Boulangerie Louise</div>
-                <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">Mix de viennoiseries et pains du jour.</p>
-                <div class="card-price">4,99 € <span style="text-decoration: line-through; font-size: 0.9rem; color: #999; font-weight: normal;">15,00 €</span></div>
-                <button class="btn-detail">Voir les détails</button>
+    <!-- Hero Section -->
+    <header class="max-w-6xl mx-auto px-4 py-12 text-center">
+        <h1 class="text-4xl md:text-6xl font-bold mb-4 text-gray-800">Sauvez de la nourriture <br><span class="text-caramel">à petit prix</span></h1>
+        <p class="text-lg text-gray-600 mb-8">Récupérez les invendus de vos commerçants locaux préférés.</p>
+    </header>
+
+    <!-- Product Grid -->
+    <main class="max-w-6xl mx-auto px-4 pb-20">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Card 1 -->
+            <div class="bg-white rounded-3xl shadow-lg overflow-hidden border border-gray-100">
+                <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=500&q=80" alt="Boulangerie" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-xl font-bold">Le Fournil d'Or</h3>
+                        <span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded">3 restants</span>
+                    </div>
+                    <p class="text-gray-500 text-sm mb-4">Panier Surprise - Viennoiseries & Pains</p>
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <span class="text-2xl font-bold text-caramel">2 500 FCFA</span>
+                            <span class="text-gray-400 line-through text-sm ml-2">7 000 FCFA</span>
+                        </div>
+                        <button onclick="openPaymentModal('Le Fournil d\'Or', 2500)" class="bg-caramel text-white px-4 py-2 rounded-xl font-bold btn-hover">
+                            Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-white rounded-3xl shadow-lg overflow-hidden border border-gray-100">
+                <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=500&q=80" alt="Salade" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-xl font-bold">Green Bar</h3>
+                        <span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded">5 restants</span>
+                    </div>
+                    <p class="text-gray-500 text-sm mb-4">Bowl Fraîcheur du jour</p>
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <span class="text-2xl font-bold text-caramel">3 000 FCFA</span>
+                            <span class="text-gray-400 line-through text-sm ml-2">6 500 FCFA</span>
+                        </div>
+                        <button onclick="openPaymentModal('Green Bar', 3000)" class="bg-caramel text-white px-4 py-2 rounded-xl font-bold btn-hover">
+                            Commander
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-white rounded-3xl shadow-lg overflow-hidden border border-gray-100">
+                <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=500&q=80" alt="Pâtisserie" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-xl font-bold">Douceurs Sucrées</h3>
+                        <span class="bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded">Dernier article !</span>
+                    </div>
+                    <p class="text-gray-500 text-sm mb-4">Assortiment de pâtisseries fines</p>
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <span class="text-2xl font-bold text-caramel">4 500 FCFA</span>
+                            <span class="text-gray-400 line-through text-sm ml-2">12 000 FCFA</span>
+                        </div>
+                        <button onclick="openPaymentModal('Douceurs Sucrées', 4500)" class="bg-caramel text-white px-4 py-2 rounded-xl font-bold btn-hover">
+                            Commander
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
+    </main>
 
-        <div class="card" onclick="openModal('Bio C Bon', 'Panier Fruits & Légumes Moches', '5.50€', 'Bio-002')">
-            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80" class="card-img" alt="Bio">
-            <div class="card-body">
-                <span class="card-tag">À récupérer avant 20h</span>
-                <div class="card-title">Bio C' Bon</div>
-                <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">3kg de fruits et légumes de saison.</p>
-                <div class="card-price">5,50 € <span style="text-decoration: line-through; font-size: 0.9rem; color: #999; font-weight: normal;">18,00 €</span></div>
-                <button class="btn-detail">Voir les détails</button>
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="fixed inset-0 modal-overlay z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Paiement</h2>
+                <button onclick="closeModal('paymentModal')" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
             </div>
+
+            <div class="mb-6 p-4 bg-cream rounded-2xl border border-gray-100">
+                <p class="text-sm text-gray-500 uppercase tracking-wider font-bold">Commande chez</p>
+                <p id="modalStoreName" class="text-xl font-bold text-sauge">Nom du commerce</p>
+                <p id="modalPrice" class="text-2xl font-black text-caramel mt-1">0 FCFA</p>
+            </div>
+
+            <label class="block text-sm font-bold text-gray-700 mb-4">Choisir votre opérateur :</label>
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <label class="relative cursor-pointer">
+                    <input type="radio" name="operator" value="mtn" class="peer sr-only" checked>
+                    <div class="p-4 border-2 rounded-2xl peer-checked:border-yellow-400 peer-checked:bg-yellow-50 flex flex-col items-center gap-2 transition-all">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/New-mtn-logo.jpg" alt="MTN" class="w-12 h-12 rounded-full object-cover">
+                        <span class="font-bold text-sm">MTN MoMo</span>
+                    </div>
+                </label>
+                <label class="relative cursor-pointer">
+                    <input type="radio" name="operator" value="orange" class="peer sr-only">
+                    <div class="p-4 border-2 rounded-2xl peer-checked:border-orange-500 peer-checked:bg-orange-50 flex flex-col items-center gap-2 transition-all">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Orange_logo.svg/1024px-Orange_logo.svg.png" alt="Orange" class="w-12 h-12 rounded-lg object-cover">
+                        <span class="font-bold text-sm">Orange Money</span>
+                    </div>
+                </label>
+            </div>
+
+            <div class="mb-8">
+                <label class="block text-sm font-bold text-gray-700 mb-2">Numéro de téléphone :</label>
+                <input type="tel" placeholder="Ex: 6xx xx xx xx" class="w-full px-4 py-3 rounded-xl border-2 border-gray-100 focus:border-caramel outline-none transition-all text-lg">
+            </div>
+
+            <button onclick="simulatePayment()" class="w-full bg-caramel text-white py-4 rounded-2xl font-bold text-lg shadow-lg btn-hover flex items-center justify-center gap-3">
+                <span>Confirmer le paiement</span>
+                <i class="fas fa-chevron-right"></i>
+            </button>
         </div>
     </div>
 
-    <!-- ONGLET COMMANDES -->
-    <div id="tab-commandes" class="tab-content">
-        <h2 style="margin-bottom: 20px;">Mes réservations</h2>
-        
-        <!-- Affiché si une commande est active -->
-        <div id="active-order" class="order-active">
-            <div class="order-status">
-                <i class="fas fa-check-circle"></i> Commande prête à être retirée
+    <!-- Success & QR Code Modal -->
+    <div id="successModal" class="fixed inset-0 modal-overlay z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl text-center">
+            <div class="w-20 h-20 bg-green-100 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-check text-4xl"></i>
             </div>
-            <h3>Boulangerie Louise</h3>
-            <p style="margin-top: 5px; color: #666;">Présentez ce QR Code au commerçant pour valider votre retrait.</p>
             
-            <div class="qr-container">
-                <!-- Génération dynamique du QR Code via l'ID de commande -->
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=SAVEBITE-CMD-88241" alt="Bon de retrait QR Code">
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Paiement Réussi !</h2>
+            <p class="text-gray-500 mb-8">Présentez ce QR Code au commerçant pour récupérer votre commande.</p>
+
+            <div class="bg-white p-4 border-4 border-sauge rounded-3xl inline-block mb-8">
+                <!-- Simulation d'un QR Code via une API de génération -->
+                <img id="qrCodeImage" src="" alt="QR Code Retrait" class="w-48 h-48 mx-auto">
             </div>
-            
-            <p style="font-weight: bold; color: var(--caramel);">Code : SB-88241</p>
-            <div class="order-id">ID Commande : #88241592</div>
-            <hr style="margin: 15px 0; border: 0; border-top: 1px solid #eee;">
-            <p style="font-size: 0.9rem; text-align: left;">
-                <i class="fas fa-clock"></i> <strong>Heure limite :</strong> Aujourd'hui, 19h00<br>
-                <i class="fas fa-map-marker-alt"></i> 12 Rue de la Paix, 75002 Paris
-            </p>
-        </div>
 
-        <!-- État vide (caché par défaut si une commande existe) -->
-        <div id="no-order" class="empty-state" style="display:none;">
-            <i class="fas fa-shopping-bag" style="font-size: 3rem; margin-bottom: 15px;"></i>
-            <p>Vous n'avez aucune commande en cours.</p>
+            <div class="bg-cream p-4 rounded-2xl mb-8">
+                <p class="text-xs text-gray-400 font-bold uppercase mb-1">Code de retrait unique</p>
+                <p id="pickupCode" class="text-xl font-mono font-bold tracking-widest text-gray-700">SB-7742-X</p>
+            </div>
+
+            <button onclick="closeModal('successModal')" class="w-full border-2 border-caramel text-caramel py-3 rounded-2xl font-bold btn-hover">
+                Fermer
+            </button>
         </div>
     </div>
-</div>
 
-<!-- Modal Détails -->
-<div id="detailModal" class="modal">
-    <div class="modal-content">
-        <span class="close-modal" onclick="closeModal()">&times;</span>
-        <h2 id="modalTitle" style="color: var(--caramel); margin-bottom: 10px;">Détails</h2>
-        <p id="modalDesc" style="margin-bottom: 15px;"></p>
-        <div style="background: #f0f0f0; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
-            <p><strong>Contenu :</strong> Peut contenir du gluten, des produits laitiers et des fruits à coque.</p>
-            <p style="margin-top:10px;"><strong>Prix total :</strong> <span id="modalPrice"></span></p>
-        </div>
-        <button class="btn-detail" onclick="simulerAchat()">Réserver ce panier</button>
-    </div>
-</div>
-
-<nav class="bottom-nav">
-    <div class="nav-item active" onclick="switchTab('boutique')">
-        <i class="fas fa-store"></i>
-        <span>Boutique</span>
-    </div>
-    <div class="nav-item" onclick="switchTab('commandes')">
-        <i class="fas fa-receipt"></i>
-        <span>Commandes</span>
-    </div>
-    <div class="nav-item">
-        <i class="fas fa-user"></i>
-        <span>Profil</span>
-    </div>
-</nav>
-
-<script>
-    function switchTab(tabName) {
-        // Gérer les classes actives de la nav
-        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-        event.currentTarget.classList.add('active');
-
-        // Gérer l'affichage du contenu
-        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-        document.getElementById('tab-' + tabName).classList.add('active');
-    }
-
-    function openModal(title, desc, price, id) {
-        document.getElementById('modalTitle').innerText = title;
-        document.getElementById('modalDesc').innerText = desc;
-        document.getElementById('modalPrice').innerText = price;
-        document.getElementById('detailModal').style.display = "block";
-    }
-
-    function closeModal() {
-        document.getElementById('detailModal').style.display = "none";
-    }
-
-    function simulerAchat() {
-        alert("Réservation confirmée ! Retrouvez votre QR Code dans l'onglet 'Commandes'.");
-        closeModal();
-        switchTab('commandes');
-        // Dans une vraie app, on mettrait à jour l'état ici pour afficher le bloc active-order
-    }
-
-    // Fermer la modale en cliquant à côté
-    window.onclick = function(event) {
-        let modal = document.getElementById('detailModal');
-        if (event.target == modal) {
-            closeModal();
+    <!-- Scripts -->
+    <script>
+        function openPaymentModal(storeName, price) {
+            document.getElementById('modalStoreName').innerText = storeName;
+            document.getElementById('modalPrice').innerText = price.toLocaleString() + ' FCFA';
+            document.getElementById('paymentModal').classList.remove('hidden');
         }
-    }
-</script>
 
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        function simulatePayment() {
+            const btn = document.querySelector('#paymentModal button');
+            const originalContent = btn.innerHTML;
+            
+            // Simulation de chargement
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Traitement en cours...';
+
+            setTimeout(() => {
+                // Génération d'un code unique
+                const randomId = Math.random().toString(36).substring(2, 8).toUpperCase();
+                const code = 'SB-' + randomId;
+                
+                document.getElementById('pickupCode').innerText = code;
+                // Génération d'une URL de QR Code (API factice pour l'exemple)
+                document.getElementById('qrCodeImage').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${code}`;
+                
+                // Switch modals
+                closeModal('paymentModal');
+                document.getElementById('successModal').classList.remove('hidden');
+                
+                // Reset button
+                btn.disabled = false;
+                btn.innerHTML = originalContent;
+            }, 2000);
+        }
+
+        // Fermer les modals en cliquant à l'extérieur
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                event.target.classList.add('hidden');
+            }
+        }
+    </script>
 </body>
 </html>
 ```
