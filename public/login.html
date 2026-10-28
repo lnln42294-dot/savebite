@@ -1,297 +1,108 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion | SaveBite Yaoundé</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --creme: #FDFBF7;
-            --caramel: #C87D53;
-            --sauge: #8A9A86;
-            --dark: #2D2D2D;
-            --gray: #e0e0e0;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SaveBite - Connexion & Inscription</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            creme: '#FDFBF7',
+            caramel: '#C87D53',
+            sauge: '#8A9A86'
+          }
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            background-color: var(--creme);
-            color: var(--dark);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        header {
-            width: 100%;
-            max-width: 400px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-        }
-
-        .back-link {
-            text-decoration: none;
-            color: var(--sauge);
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--caramel);
-        }
-
-        .logo span {
-            color: var(--sauge);
-        }
-
-        .auth-card {
-            background: white;
-            width: 100%;
-            max-width: 400px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            overflow: hidden;
-            border: 1px solid rgba(200, 125, 83, 0.1);
-        }
-
-        .tabs {
-            display: flex;
-            background: #f8f8f8;
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 15px;
-            border: none;
-            background: none;
-            cursor: pointer;
-            font-weight: 600;
-            color: #888;
-            transition: 0.3s;
-            border-bottom: 2px solid transparent;
-        }
-
-        .tab-btn.active {
-            color: var(--caramel);
-            background: white;
-            border-bottom: 2px solid var(--caramel);
-        }
-
-        .form-container {
-            padding: 30px;
-        }
-
-        form {
-            display: none;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        form.active {
-            display: flex;
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        label {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--sauge);
-        }
-
-        input, select {
-            padding: 12px;
-            border: 1px solid var(--gray);
-            border-radius: 8px;
-            font-size: 0.95rem;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        input:focus {
-            border-color: var(--caramel);
-        }
-
-        .role-selector {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .role-option {
-            position: relative;
-        }
-
-        .role-option input {
-            position: absolute;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        .role-label {
-            display: block;
-            text-align: center;
-            padding: 10px;
-            border: 1px solid var(--gray);
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            transition: 0.3s;
-        }
-
-        .role-option input:checked + .role-label {
-            background-color: var(--sauge);
-            color: white;
-            border-color: var(--sauge);
-        }
-
-        .btn-submit {
-            background-color: var(--caramel);
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: 0.3s;
-        }
-
-        .btn-submit:hover {
-            background-color: #b06a43;
-            transform: translateY(-2px);
-        }
-
-        .footer-text {
-            text-align: center;
-            font-size: 0.8rem;
-            color: #999;
-            margin-top: 20px;
-        }
-    </style>
+      }
+    }
+  </script>
 </head>
-<body>
+<body class="bg-creme min-h-screen flex flex-col justify-between text-gray-800">
 
-    <header>
-        <a href="index.html" class="back-link">← Accueil</a>
-        <div class="logo">SaveBite<span>.Yde</span></div>
-    </header>
-
-    <div class="auth-card">
-        <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('login')">Se connecter</button>
-            <button class="tab-btn" onclick="switchTab('signup')">S'inscrire</button>
-        </div>
-
-        <div class="form-container">
-            <!-- Formulaire de Connexion -->
-            <form id="loginForm" class="active" onsubmit="handleLogin(event)">
-                <div class="input-group">
-                    <label>Email ou Téléphone</label>
-                    <input type="text" placeholder="votre@email.com" required>
-                </div>
-                <div class="input-group">
-                    <label>Mot de passe</label>
-                    <input type="password" placeholder="••••••••" required>
-                </div>
-                <button type="submit" class="btn-submit">Connexion</button>
-                <p class="footer-text">Connexion sécurisée via SaveBite Cloud</p>
-            </form>
-
-            <!-- Formulaire d'Inscription -->
-            <form id="signupForm" onsubmit="handleSignup(event)">
-                <div class="input-group">
-                    <label>Type de profil</label>
-                    <div class="role-selector">
-                        <div class="role-option">
-                            <input type="radio" id="role-client" name="role" value="client" checked>
-                            <label for="role-client" class="role-label">Client</label>
-                        </div>
-                        <div class="role-option">
-                            <input type="radio" id="role-merchant" name="role" value="merchant">
-                            <label for="role-merchant" class="role-label">Commerçant</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label>Nom complet / Nom Boutique</label>
-                    <input type="text" placeholder="Jean Dupont ou Boulangerie Centrale" required>
-                </div>
-                <div class="input-group">
-                    <label>Téléphone (MTN / Orange Money)</label>
-                    <input type="tel" placeholder="6xx xxx xxx" required>
-                </div>
-                <div class="input-group">
-                    <label>Email</label>
-                    <input type="email" placeholder="contact@domaine.com" required>
-                </div>
-                <div class="input-group">
-                    <label>Mot de passe</label>
-                    <input type="password" placeholder="Minimum 8 caractères" required>
-                </div>
-                <button type="submit" class="btn-submit">Créer mon compte</button>
-            </form>
-        </div>
+  <!-- Header -->
+  <header class="p-6 flex justify-between items-center max-w-6xl mx-auto w-full">
+    <div class="flex items-center space-x-2">
+      <span class="text-2xl font-bold text-caramel">🌱 SaveBite</span>
     </div>
+    <a href="index.html" class="text-sm font-semibold text-sauge hover:underline">← Retour aux offres</a>
+  </header>
 
-    <script>
-        function switchTab(type) {
-            const loginForm = document.getElementById('loginForm');
-            const signupForm = document.getElementById('signupForm');
-            const tabs = document.querySelectorAll('.tab-btn');
+  <!-- Form Card -->
+  <main class="flex-grow flex items-center justify-center p-4">
+    <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 max-w-md w-full">
+      
+      <!-- Tabs -->
+      <div class="flex border-b mb-6">
+        <button id="btn-login" onclick="switchTab('login')" class="w-1/2 pb-3 font-semibold text-caramel border-b-2 border-caramel text-center">Connexion</button>
+        <button id="btn-register" onclick="switchTab('register')" class="w-1/2 pb-3 font-semibold text-gray-400 border-b-2 border-transparent text-center">Créer un compte</button>
+      </div>
 
-            if (type === 'login') {
-                loginForm.classList.add('active');
-                signupForm.classList.remove('active');
-                tabs[0].classList.add('active');
-                tabs[1].classList.remove('active');
-            } else {
-                signupForm.classList.add('active');
-                loginForm.classList.remove('active');
-                tabs[1].classList.add('active');
-                tabs[0].classList.remove('active');
-            }
-        }
+      <!-- Connexion Form -->
+      <form id="form-login" class="space-y-4" onsubmit="event.preventDefault(); window.location.href='index.html';">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Email ou Téléphone</label>
+          <input type="text" required placeholder="6XX XX XX XX" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-caramel">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
+          <input type="password" required placeholder="••••••••" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-caramel">
+        </div>
+        <button type="submit" class="w-full bg-caramel text-white py-3 rounded-lg font-semibold hover:opacity-90 transition">Se connecter</button>
+      </form>
 
-        function handleLogin(e) {
-            e.preventDefault();
-            // Simulation de redirection - Dans un vrai cas, on vérifierait le type d'utilisateur en DB
-            // Ici, par défaut on redirige vers index.html
-            alert("Connexion réussie !");
-            window.location.href = 'index.html';
-        }
+      <!-- Inscription Form -->
+      <form id="form-register" class="space-y-4 hidden" onsubmit="event.preventDefault(); window.location.href='index.html';">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Vous êtes :</label>
+          <div class="grid grid-cols-2 gap-2">
+            <button type="button" class="border p-2 rounded-lg text-sm font-semibold border-caramel text-caramel bg-amber-50">Client</button>
+            <button type="button" class="border p-2 rounded-lg text-sm font-semibold border-gray-200 text-gray-600">Commerçant</button>
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Nom complet</label>
+          <input type="text" required placeholder="Jean Dupont" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-caramel">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Numéro Mobile Money (MTN / Orange)</label>
+          <input type="tel" required placeholder="6XX XX XX XX" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-caramel">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
+          <input type="password" required placeholder="••••••••" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-caramel">
+        </div>
+        <button type="submit" class="w-full bg-sauge text-white py-3 rounded-lg font-semibold hover:opacity-90 transition">Créer mon compte</button>
+      </form>
 
-        function handleSignup(e) {
-            e.preventDefault();
-            const role = document.querySelector('input[name="role"]:checked').value;
-            
-            alert("Compte créé avec succès !");
-            
-            if (role === 'merchant') {
-                window.location.href = 'merchant.html';
-            } else {
-                window.location.href = 'index.html';
-            }
-        }
-    </script>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="p-4 text-center text-xs text-gray-400">
+    © 2026 SaveBite Yaoundé - Anti-gaspillage alimentaire
+  </footer>
+
+  <script>
+    function switchTab(type) {
+      const loginForm = document.getElementById('form-login');
+      const registerForm = document.getElementById('form-register');
+      const btnLogin = document.getElementById('btn-login');
+      const btnRegister = document.getElementById('btn-register');
+
+      if (type === 'login') {
+        loginForm.classList.remove('hidden');
+        registerForm.classList.add('hidden');
+        btnLogin.className = "w-1/2 pb-3 font-semibold text-caramel border-b-2 border-caramel text-center";
+        btnRegister.className = "w-1/2 pb-3 font-semibold text-gray-400 border-b-2 border-transparent text-center";
+      } else {
+        loginForm.classList.add('hidden');
+        registerForm.classList.remove('hidden');
+        btnRegister.className = "w-1/2 pb-3 font-semibold text-caramel border-b-2 border-caramel text-center";
+        btnLogin.className = "w-1/2 pb-3 font-semibold text-gray-400 border-b-2 border-transparent text-center";
+      }
+    }
+  </script>
 </body>
 </html>
