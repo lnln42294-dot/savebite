@@ -1,0 +1,333 @@
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaveBite Yaoundé - Stop au gaspillage alimentaire</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --cream: #FDFBF7;
+            --caramel: #C87D53;
+            --sage: #8A9A86;
+            --dark: #2D2D2D;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--cream);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--white);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--caramel);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--caramel);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s, background 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-outline {
+            border: 2px solid var(--caramel);
+            color: var(--caramel);
+        }
+
+        .btn-primary {
+            background-color: var(--caramel);
+            color: var(--white);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 80vh;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .hero-content h1 span {
+            color: var(--sage);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            color: #666;
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .hero-image img {
+            width: 90%;
+            border-radius: 30px;
+            box-shadow: 20px 20px 0 var(--sage);
+        }
+
+        /* Presentation Steps */
+        .steps {
+            padding: 5rem 5%;
+            background-color: var(--white);
+            text-align: center;
+        }
+
+        .section-title {
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .step-card {
+            padding: 2rem;
+        }
+
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            background-color: var(--cream);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: var(--caramel);
+        }
+
+        /* Profile Choice */
+        .profiles {
+            padding: 5rem 5%;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .profile-card {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: border 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .profile-card:hover {
+            border-color: var(--sage);
+        }
+
+        .profile-card i {
+            font-size: 3rem;
+            color: var(--sage);
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        footer {
+            padding: 3rem 5%;
+            background: var(--dark);
+            color: var(--white);
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 2rem;
+            }
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .hero-image {
+                margin-top: 3rem;
+                justify-content: center;
+            }
+            nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">
+            <i class="fas fa-leaf"></i> SaveBite
+        </a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Paniers</a></li>
+                <li><a href="merchant.html">Commerçants</a></li>
+                <li><a href="#">À propos</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons">
+            <a href="#" class="btn btn-outline">Connexion</a>
+            <a href="#" class="btn btn-primary">Inscription</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Sauvez des délices, préservez <span>Yaoundé</span>.</h1>
+            <p>Rejoignez la révolution anti-gaspillage. Savourez les invendus de vos commerçants préférés à prix réduits, de Bastos à Omnisports.</p>
+            <a href="index.html" class="btn btn-primary" style="padding: 1.2rem 2.5rem; font-size: 1.1rem;">
+                Découvrir les paniers disponibles
+            </a>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800" alt="Aliments frais Yaoundé">
+        </div>
+    </section>
+
+    <section class="steps">
+        <div class="section-title">
+            <h2>Comment ça marche ?</h2>
+        </div>
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-icon"><i class="fas fa-search"></i></div>
+                <h3>1. Parcourez</h3>
+                <p>Explorez les offres de paniers surprises autour de vous à Yaoundé.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-icon"><i class="fas fa-mobile-alt"></i></div>
+                <h3>2. Réservez</h3>
+                <p>Payez en un clic via Mobile Money (Orange ou MTN) pour valider votre panier.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-icon"><i class="fas fa-qrcode"></i></div>
+                <h3>3. Récupérez</h3>
+                <p>Présentez votre QR Code chez le commerçant et repartez avec vos délices.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="profiles">
+        <div class="section-title" style="text-align: center;">
+            <h2>Prêt à commencer ?</h2>
+        </div>
+        <div class="profile-grid">
+            <div class="profile-card">
+                <i class="fas fa-utensils"></i>
+                <h3>Je suis un Client</h3>
+                <p>Je souhaite acheter des paniers de qualité à petit prix.</p>
+                <br>
+                <a href="index.html" class="btn btn-primary">Explorer les offres</a>
+            </div>
+            <div class="profile-card">
+                <i class="fas fa-store"></i>
+                <h3>Je suis un Commerçant</h3>
+                <p>Je souhaite vendre mes invendus et réduire mes pertes.</p>
+                <br>
+                <a href="merchant.html" class="btn btn-outline">Espace Partenaire</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 SaveBite Yaoundé - Fait avec <i class="fas fa-heart" style="color: #e74c3c;"></i> pour notre ville.</p>
+    </footer>
+
+</body>
+</html>
+```
