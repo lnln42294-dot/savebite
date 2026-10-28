@@ -5,31 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SaveBite Yaoundé - Luttez contre le gaspillage alimentaire</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --creme: #FDFBF7;
             --caramel: #C87D53;
             --sauge: #8A9A86;
-            --dark: #333333;
-            --white: #ffffff;
+            --noir: #2D2D2D;
+            --blanc: #FFFFFF;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
+            font-family: 'Poppins', sans-serif;
             background-color: var(--creme);
-            color: var(--dark);
+            color: var(--noir);
             line-height: 1.6;
         }
 
-        /* Header & Nav */
+        /* Header Styles */
         header {
-            background-color: var(--white);
+            background: var(--blanc);
             padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
@@ -41,8 +42,8 @@
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
+            font-size: 1.5rem;
+            font-weight: 700;
             color: var(--caramel);
             text-decoration: none;
             display: flex;
@@ -50,26 +51,24 @@
             gap: 10px;
         }
 
-        .nav-buttons .btn-login {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 600;
-            margin-right: 20px;
-            transition: color 0.3s;
+        .nav-auth {
+            display: flex;
+            gap: 15px;
         }
 
-        .nav-buttons .btn-signup {
+        .btn-outline {
+            padding: 8px 20px;
+            border: 2px solid var(--caramel);
+            color: var(--caramel);
             text-decoration: none;
-            background-color: var(--sauge);
-            color: white;
-            padding: 10px 20px;
             border-radius: 50px;
             font-weight: 600;
-            transition: opacity 0.3s;
+            transition: 0.3s;
         }
 
-        .nav-buttons .btn-signup:hover {
-            opacity: 0.9;
+        .btn-outline:hover {
+            background: var(--caramel);
+            color: var(--blanc);
         }
 
         /* Hero Section */
@@ -79,7 +78,7 @@
             align-items: center;
             justify-content: space-between;
             min-height: 80vh;
-            background: linear-gradient(135deg, #fdfbf7 0%, #f5eee6 100%);
+            background: radial-gradient(circle at top right, #f7f0e6, var(--creme));
         }
 
         .hero-content {
@@ -89,56 +88,56 @@
 
         .hero-content h1 {
             font-size: 3.5rem;
-            color: var(--dark);
-            line-height: 1.1;
-            margin-bottom: 20px;
-        }
-
-        .hero-content h1 span {
             color: var(--caramel);
+            line-height: 1.2;
+            margin-bottom: 20px;
         }
 
         .hero-content p {
             font-size: 1.2rem;
+            color: var(--sauge);
             margin-bottom: 30px;
-            color: #555;
+            font-weight: 400;
         }
 
-        .btn-cta {
+        .btn-main {
             display: inline-block;
-            background-color: var(--caramel);
-            color: white;
-            padding: 15px 35px;
-            border-radius: 50px;
+            padding: 15px 40px;
+            background: var(--caramel);
+            color: var(--blanc);
             text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
             font-size: 1.1rem;
-            font-weight: bold;
-            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(200, 125, 83, 0.3);
+            transition: 0.3s;
         }
 
-        .btn-cta:hover {
+        .btn-main:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(200, 125, 83, 0.3);
+            box-shadow: 0 6px 20px rgba(200, 125, 83, 0.4);
         }
 
         .hero-image {
             flex: 1;
-            text-align: right;
+            display: flex;
+            justify-content: center;
         }
 
         .hero-image img {
-            max-width: 90%;
+            max-width: 80%;
             border-radius: 20px;
         }
 
-        /* How it works */
+        /* Steps Section */
         .steps {
             padding: 80px 5%;
-            background-color: var(--white);
+            background: var(--blanc);
             text-align: center;
         }
 
         .section-title {
+            color: var(--caramel);
             font-size: 2.5rem;
             margin-bottom: 50px;
         }
@@ -151,6 +150,7 @@
 
         .step-card {
             padding: 30px;
+            transition: 0.3s;
         }
 
         .step-card i {
@@ -161,69 +161,60 @@
 
         .step-card h3 {
             margin-bottom: 15px;
-            font-size: 1.5rem;
+            color: var(--noir);
         }
 
-        /* Role Selection */
-        .roles {
+        /* Choice Section */
+        .choices {
             padding: 80px 5%;
             display: flex;
-            justify-content: center;
             gap: 30px;
             flex-wrap: wrap;
         }
 
-        .role-card {
-            background: var(--white);
-            border: 2px solid transparent;
-            padding: 40px;
+        .choice-card {
+            flex: 1;
+            min-width: 300px;
+            padding: 50px;
             border-radius: 20px;
-            width: 450px;
             text-align: center;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .role-card:hover {
-            border-color: var(--caramel);
-            transform: translateY(-5px);
+        .card-client {
+            background: var(--sauge);
+            color: var(--blanc);
         }
 
-        .role-card.merchant:hover {
-            border-color: var(--sauge);
+        .card-merchant {
+            background: var(--noir);
+            color: var(--blanc);
         }
 
-        .role-card h2 {
+        .choice-card h2 {
             font-size: 2rem;
-            margin-bottom: 15px;
-            color: var(--caramel);
-        }
-
-        .role-card.merchant h2 {
-            color: var(--sauge);
-        }
-
-        .role-card p {
-            margin-bottom: 25px;
-            color: #666;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--dark);
-            color: var(--white);
-            padding: 50px 5%;
-            text-align: center;
-        }
-
-        .footer-logo {
-            font-size: 1.5rem;
-            color: var(--caramel);
             margin-bottom: 20px;
-            display: block;
+        }
+
+        .btn-white {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: var(--blanc);
+            color: var(--noir);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+
+        footer {
+            padding: 40px 5%;
+            background: var(--creme);
+            text-align: center;
+            border-top: 1px solid #eee;
+            color: var(--sauge);
         }
 
         @media (max-width: 768px) {
@@ -238,9 +229,6 @@
             .hero-image {
                 margin-top: 40px;
             }
-            .role-card {
-                width: 100%;
-            }
         }
     </style>
 </head>
@@ -248,22 +236,21 @@
 
     <header>
         <a href="home.html" class="logo">
-            <i class="fas fa-leaf"></i> SaveBite
+            <i class="fas fa-leaf"></i> SaveBite Yaoundé
         </a>
-        <div class="nav-buttons">
-            <a href="login.html" class="btn-login">Connexion</a>
-            <a href="login.html" class="btn-signup">Inscription</a>
+        <div class="nav-auth">
+            <a href="login.html" class="btn-outline">Connexion / Inscription</a>
         </div>
     </header>
 
     <section class="hero">
         <div class="hero-content">
-            <h1>Mangez bien, payez moins, <span>sauvez la planète.</span></h1>
-            <p>Rejoignez la révolution anti-gaspillage à Yaoundé. Récupérez les invendus de vos commerçants préférés à prix réduits.</p>
-            <a href="index.html" class="btn-cta">Découvrir les paniers</a>
+            <h1>Sauvez les délices de Yaoundé</h1>
+            <p>Rejoignez le mouvement anti-gaspillage. Récupérez les invendus de vos restaurants et boulangeries préférés à prix réduits.</p>
+            <a href="index.html" class="btn-main">Découvrir les paniers</a>
         </div>
         <div class="hero-image">
-            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=600" alt="Aliments frais Yaoundé">
+            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=600" alt="Aliments frais">
         </div>
     </section>
 
@@ -272,45 +259,38 @@
         <div class="steps-container">
             <div class="step-card">
                 <i class="fas fa-search"></i>
-                <h3>1. Parcourir</h3>
-                <p>Explorez les paniers surprises disponibles chez les boulangeries, restos et supermarchés de Yaoundé.</p>
+                <h3>Parcourir</h3>
+                <p>Explorez les paniers surprises disponibles autour de vous à Yaoundé.</p>
             </div>
             <div class="step-card">
                 <i class="fas fa-mobile-alt"></i>
-                <h3>2. Commander</h3>
-                <p>Réservez votre panier en un clic et payez instantanément via Mobile Money (OM/MoMo).</p>
+                <h3>Commander</h3>
+                <p>Réservez et payez en toute sécurité via Mobile Money.</p>
             </div>
             <div class="step-card">
                 <i class="fas fa-qrcode"></i>
-                <h3>3. Récupérer</h3>
-                <p>Présentez votre QR Code chez le commerçant à l'heure indiquée et repartez avec vos produits.</p>
+                <h3>Récupérer</h3>
+                <p>Présentez votre QR Code chez le commerçant et récupérez votre panier.</p>
             </div>
         </div>
     </section>
 
-    <section class="roles">
-        <a href="index.html" class="role-card">
-            <i class="fas fa-shopping-basket" style="font-size: 3rem; color: var(--caramel); margin-bottom: 20px;"></i>
-            <h2>Je suis un Client</h2>
-            <p>Je souhaite acheter des produits de qualité à petit prix tout en évitant le gaspillage alimentaire.</p>
-            <span style="color: var(--caramel); font-weight: bold;">Trouver un panier →</span>
-        </a>
-        <a href="merchant.html" class="role-card merchant">
-            <i class="fas fa-store" style="font-size: 3rem; color: var(--sauge); margin-bottom: 20px;"></i>
-            <h2>Je suis Commerçant</h2>
-            <p>Je souhaite réduire mes pertes, attirer de nouveaux clients et valoriser mes invendus du jour.</p>
-            <span style="color: var(--sauge); font-weight: bold;">Vendre mes produits →</span>
-        </a>
+    <section class="choices">
+        <div class="choice-card card-client">
+            <h2>Je suis un Gourmand</h2>
+            <p>Je veux manger local, réduire mon budget et sauver la planète.</p>
+            <a href="index.html" class="btn-white">Voir la carte</a>
+        </div>
+        <div class="choice-card card-merchant">
+            <h2>Je suis un Commerçant</h2>
+            <p>Je veux réduire mes pertes et faire découvrir mes produits.</p>
+            <a href="merchant.html" class="btn-white">Espace Partenaire</a>
+        </div>
     </section>
 
     <footer>
-        <span class="footer-logo">SaveBite Yaoundé</span>
-        <p>&copy; 2023 SaveBite. Fait avec passion pour le Cameroun.</p>
-        <div style="margin-top: 20px;">
-            <a href="#" style="color: white; margin: 0 10px; text-decoration: none;">Contact</a>
-            <a href="#" style="color: white; margin: 0 10px; text-decoration: none;">Mentions légales</a>
-            <a href="#" style="color: white; margin: 0 10px; text-decoration: none;">FAQ</a>
-        </div>
+        <p>&copy; 2023 SaveBite Yaoundé. Tous droits réservés.</p>
+        <p style="margin-top: 10px; font-size: 0.8rem;">Ensemble contre le gaspillage alimentaire au Cameroun.</p>
     </footer>
 
 </body>
