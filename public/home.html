@@ -1,51 +1,48 @@
-```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SaveBite Yaoundé - Stop au gaspillage alimentaire</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>SaveBite Yaoundé - Luttez contre le gaspillage alimentaire</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-
         :root {
-            --cream: #FDFBF7;
+            --creme: #FDFBF7;
             --caramel: #C87D53;
-            --sage: #8A9A86;
-            --dark: #2D2D2D;
-            --white: #FFFFFF;
+            --sauge: #8A9A86;
+            --dark: #333333;
+            --white: #ffffff;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: var(--cream);
+            background-color: var(--creme);
             color: var(--dark);
             line-height: 1.6;
         }
 
-        /* Header */
+        /* Header & Nav */
         header {
             background-color: var(--white);
             padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-size: 1.8rem;
+            font-weight: bold;
             color: var(--caramel);
             text-decoration: none;
             display: flex;
@@ -53,60 +50,36 @@
             gap: 10px;
         }
 
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        nav a {
+        .nav-buttons .btn-login {
             text-decoration: none;
             color: var(--dark);
-            font-weight: 500;
+            font-weight: 600;
+            margin-right: 20px;
             transition: color 0.3s;
         }
 
-        nav a:hover {
-            color: var(--caramel);
-        }
-
-        .auth-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn {
-            padding: 0.6rem 1.5rem;
-            border-radius: 50px;
+        .nav-buttons .btn-signup {
             text-decoration: none;
+            background-color: var(--sauge);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
             font-weight: 600;
-            transition: transform 0.2s, background 0.3s;
-            cursor: pointer;
-            border: none;
+            transition: opacity 0.3s;
         }
 
-        .btn-outline {
-            border: 2px solid var(--caramel);
-            color: var(--caramel);
-        }
-
-        .btn-primary {
-            background-color: var(--caramel);
-            color: var(--white);
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
+        .nav-buttons .btn-signup:hover {
             opacity: 0.9;
         }
 
         /* Hero Section */
         .hero {
-            padding: 5rem 5%;
+            padding: 80px 5%;
             display: flex;
             align-items: center;
             justify-content: space-between;
             min-height: 80vh;
+            background: linear-gradient(135deg, #fdfbf7 0%, #f5eee6 100%);
         }
 
         .hero-content {
@@ -116,133 +89,157 @@
 
         .hero-content h1 {
             font-size: 3.5rem;
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
             color: var(--dark);
+            line-height: 1.1;
+            margin-bottom: 20px;
         }
 
         .hero-content h1 span {
-            color: var(--sage);
+            color: var(--caramel);
         }
 
         .hero-content p {
             font-size: 1.2rem;
-            margin-bottom: 2.5rem;
-            color: #666;
+            margin-bottom: 30px;
+            color: #555;
+        }
+
+        .btn-cta {
+            display: inline-block;
+            background-color: var(--caramel);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(200, 125, 83, 0.3);
         }
 
         .hero-image {
             flex: 1;
-            display: flex;
-            justify-content: flex-end;
+            text-align: right;
         }
 
         .hero-image img {
-            width: 90%;
-            border-radius: 30px;
-            box-shadow: 20px 20px 0 var(--sage);
+            max-width: 90%;
+            border-radius: 20px;
         }
 
-        /* Presentation Steps */
+        /* How it works */
         .steps {
-            padding: 5rem 5%;
+            padding: 80px 5%;
             background-color: var(--white);
             text-align: center;
         }
 
         .section-title {
-            margin-bottom: 4rem;
-        }
-
-        .section-title h2 {
             font-size: 2.5rem;
-            color: var(--dark);
+            margin-bottom: 50px;
         }
 
-        .steps-grid {
+        .steps-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
+            gap: 40px;
         }
 
         .step-card {
-            padding: 2rem;
+            padding: 30px;
         }
 
-        .step-icon {
-            width: 80px;
-            height: 80px;
-            background-color: var(--cream);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 2rem;
-            color: var(--caramel);
-        }
-
-        /* Profile Choice */
-        .profiles {
-            padding: 5rem 5%;
-        }
-
-        .profile-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .profile-card {
-            background: var(--white);
-            padding: 3rem;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: border 0.3s;
-            border: 2px solid transparent;
-        }
-
-        .profile-card:hover {
-            border-color: var(--sage);
-        }
-
-        .profile-card i {
+        .step-card i {
             font-size: 3rem;
-            color: var(--sage);
-            margin-bottom: 1.5rem;
+            color: var(--sauge);
+            margin-bottom: 20px;
         }
 
-        .profile-card h3 {
-            margin-bottom: 1rem;
+        .step-card h3 {
+            margin-bottom: 15px;
             font-size: 1.5rem;
         }
 
+        /* Role Selection */
+        .roles {
+            padding: 80px 5%;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .role-card {
+            background: var(--white);
+            border: 2px solid transparent;
+            padding: 40px;
+            border-radius: 20px;
+            width: 450px;
+            text-align: center;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .role-card:hover {
+            border-color: var(--caramel);
+            transform: translateY(-5px);
+        }
+
+        .role-card.merchant:hover {
+            border-color: var(--sauge);
+        }
+
+        .role-card h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--caramel);
+        }
+
+        .role-card.merchant h2 {
+            color: var(--sauge);
+        }
+
+        .role-card p {
+            margin-bottom: 25px;
+            color: #666;
+        }
+
+        /* Footer */
         footer {
-            padding: 3rem 5%;
-            background: var(--dark);
+            background-color: var(--dark);
             color: var(--white);
+            padding: 50px 5%;
             text-align: center;
         }
 
-        /* Responsive */
+        .footer-logo {
+            font-size: 1.5rem;
+            color: var(--caramel);
+            margin-bottom: 20px;
+            display: block;
+        }
+
         @media (max-width: 768px) {
             .hero {
                 flex-direction: column;
                 text-align: center;
-                padding-top: 2rem;
+                padding-top: 40px;
             }
             .hero-content h1 {
                 font-size: 2.5rem;
             }
             .hero-image {
-                margin-top: 3rem;
-                justify-content: center;
+                margin-top: 40px;
             }
-            nav {
-                display: none;
+            .role-card {
+                width: 100%;
             }
         }
     </style>
@@ -250,84 +247,71 @@
 <body>
 
     <header>
-        <a href="#" class="logo">
+        <a href="home.html" class="logo">
             <i class="fas fa-leaf"></i> SaveBite
         </a>
-        <nav>
-            <ul>
-                <li><a href="index.html">Paniers</a></li>
-                <li><a href="merchant.html">Commerçants</a></li>
-                <li><a href="#">À propos</a></li>
-            </ul>
-        </nav>
-        <div class="auth-buttons">
-            <a href="#" class="btn btn-outline">Connexion</a>
-            <a href="#" class="btn btn-primary">Inscription</a>
+        <div class="nav-buttons">
+            <a href="login.html" class="btn-login">Connexion</a>
+            <a href="login.html" class="btn-signup">Inscription</a>
         </div>
     </header>
 
     <section class="hero">
         <div class="hero-content">
-            <h1>Sauvez des délices, préservez <span>Yaoundé</span>.</h1>
-            <p>Rejoignez la révolution anti-gaspillage. Savourez les invendus de vos commerçants préférés à prix réduits, de Bastos à Omnisports.</p>
-            <a href="index.html" class="btn btn-primary" style="padding: 1.2rem 2.5rem; font-size: 1.1rem;">
-                Découvrir les paniers disponibles
-            </a>
+            <h1>Mangez bien, payez moins, <span>sauvez la planète.</span></h1>
+            <p>Rejoignez la révolution anti-gaspillage à Yaoundé. Récupérez les invendus de vos commerçants préférés à prix réduits.</p>
+            <a href="index.html" class="btn-cta">Découvrir les paniers</a>
         </div>
         <div class="hero-image">
-            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800" alt="Aliments frais Yaoundé">
+            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=600" alt="Aliments frais Yaoundé">
         </div>
     </section>
 
     <section class="steps">
-        <div class="section-title">
-            <h2>Comment ça marche ?</h2>
-        </div>
-        <div class="steps-grid">
+        <h2 class="section-title">Comment ça marche ?</h2>
+        <div class="steps-container">
             <div class="step-card">
-                <div class="step-icon"><i class="fas fa-search"></i></div>
-                <h3>1. Parcourez</h3>
-                <p>Explorez les offres de paniers surprises autour de vous à Yaoundé.</p>
+                <i class="fas fa-search"></i>
+                <h3>1. Parcourir</h3>
+                <p>Explorez les paniers surprises disponibles chez les boulangeries, restos et supermarchés de Yaoundé.</p>
             </div>
             <div class="step-card">
-                <div class="step-icon"><i class="fas fa-mobile-alt"></i></div>
-                <h3>2. Réservez</h3>
-                <p>Payez en un clic via Mobile Money (Orange ou MTN) pour valider votre panier.</p>
+                <i class="fas fa-mobile-alt"></i>
+                <h3>2. Commander</h3>
+                <p>Réservez votre panier en un clic et payez instantanément via Mobile Money (OM/MoMo).</p>
             </div>
             <div class="step-card">
-                <div class="step-icon"><i class="fas fa-qrcode"></i></div>
-                <h3>3. Récupérez</h3>
-                <p>Présentez votre QR Code chez le commerçant et repartez avec vos délices.</p>
+                <i class="fas fa-qrcode"></i>
+                <h3>3. Récupérer</h3>
+                <p>Présentez votre QR Code chez le commerçant à l'heure indiquée et repartez avec vos produits.</p>
             </div>
         </div>
     </section>
 
-    <section class="profiles">
-        <div class="section-title" style="text-align: center;">
-            <h2>Prêt à commencer ?</h2>
-        </div>
-        <div class="profile-grid">
-            <div class="profile-card">
-                <i class="fas fa-utensils"></i>
-                <h3>Je suis un Client</h3>
-                <p>Je souhaite acheter des paniers de qualité à petit prix.</p>
-                <br>
-                <a href="index.html" class="btn btn-primary">Explorer les offres</a>
-            </div>
-            <div class="profile-card">
-                <i class="fas fa-store"></i>
-                <h3>Je suis un Commerçant</h3>
-                <p>Je souhaite vendre mes invendus et réduire mes pertes.</p>
-                <br>
-                <a href="merchant.html" class="btn btn-outline">Espace Partenaire</a>
-            </div>
-        </div>
+    <section class="roles">
+        <a href="index.html" class="role-card">
+            <i class="fas fa-shopping-basket" style="font-size: 3rem; color: var(--caramel); margin-bottom: 20px;"></i>
+            <h2>Je suis un Client</h2>
+            <p>Je souhaite acheter des produits de qualité à petit prix tout en évitant le gaspillage alimentaire.</p>
+            <span style="color: var(--caramel); font-weight: bold;">Trouver un panier →</span>
+        </a>
+        <a href="merchant.html" class="role-card merchant">
+            <i class="fas fa-store" style="font-size: 3rem; color: var(--sauge); margin-bottom: 20px;"></i>
+            <h2>Je suis Commerçant</h2>
+            <p>Je souhaite réduire mes pertes, attirer de nouveaux clients et valoriser mes invendus du jour.</p>
+            <span style="color: var(--sauge); font-weight: bold;">Vendre mes produits →</span>
+        </a>
     </section>
 
     <footer>
-        <p>&copy; 2023 SaveBite Yaoundé - Fait avec <i class="fas fa-heart" style="color: #e74c3c;"></i> pour notre ville.</p>
+        <span class="footer-logo">SaveBite Yaoundé</span>
+        <p>&copy; 2023 SaveBite. Fait avec passion pour le Cameroun.</p>
+        <div style="margin-top: 20px;">
+            <a href="#" style="color: white; margin: 0 10px; text-decoration: none;">Contact</a>
+            <a href="#" style="color: white; margin: 0 10px; text-decoration: none;">Mentions légales</a>
+            <a href="#" style="color: white; margin: 0 10px; text-decoration: none;">FAQ</a>
+        </div>
     </footer>
 
 </body>
 </html>
-```
