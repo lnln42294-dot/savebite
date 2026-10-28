@@ -3,327 +3,287 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Authentification - SaveBite Yaoundé</title>
+    <title>Connexion | SaveBite Yaoundé</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-cream: #FDFBF7;
+            --cream: #FDFBF7;
             --caramel: #C87D53;
-            --caramel-dark: #a66642;
             --sage: #8A9A86;
-            --white: #ffffff;
-            --gray: #666;
-            --border: #e0e0e0;
+            --dark: #2D2D2D;
+            --white: #FFFFFF;
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
-            background-color: var(--bg-cream);
-            color: #333;
+            background-color: var(--cream);
+            color: var(--dark);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
-        /* En-tête */
-        header {
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: transparent;
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
+            font-size: 2rem;
+            font-weight: 700;
             color: var(--caramel);
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
-        .btn-back {
-            text-decoration: none;
+        .back-link {
+            display: inline-block;
+            margin-top: 10px;
             color: var(--sage);
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: color 0.3s;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.3s;
         }
 
-        .btn-back:hover {
-            color: var(--caramel);
-        }
-
-        /* Conteneur Principal */
-        main {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+        .back-link:hover {
+            text-decoration: underline;
         }
 
         .auth-card {
             background: var(--white);
             width: 100%;
             max-width: 450px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             overflow: hidden;
+            border: 1px solid rgba(138, 154, 134, 0.1);
         }
 
-        /* Onglets */
         .tabs {
             display: flex;
-            border-bottom: 1px solid var(--border);
+            background: #f8f8f8;
+            border-bottom: 1px solid #eee;
         }
 
-        .tab {
+        .tab-btn {
             flex: 1;
             padding: 1.2rem;
-            text-align: center;
+            border: none;
+            background: none;
             cursor: pointer;
             font-weight: 600;
-            color: var(--gray);
-            transition: all 0.3s;
-            background: #f9f9f9;
+            color: #888;
+            transition: 0.3s;
         }
 
-        .tab.active {
+        .tab-btn.active {
             background: var(--white);
             color: var(--caramel);
             border-bottom: 3px solid var(--caramel);
         }
 
-        /* Formulaires */
         .form-container {
-            padding: 2rem;
+            padding: 2.5rem;
+        }
+
+        .auth-form {
             display: none;
         }
 
-        .form-container.active {
+        .auth-form.active {
             display: block;
         }
 
         .form-group {
-            margin-bottom: 1.2rem;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--sage);
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        input[type="password"] {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        input:focus {
-            border-color: var(--caramel);
-        }
-
-        /* Rôle Selector */
-        .role-selector {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
             margin-bottom: 1.5rem;
         }
 
-        .role-option {
-            position: relative;
-        }
-
-        .role-option input {
-            position: absolute;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        .role-label {
+        .form-group label {
             display: block;
-            text-align: center;
-            padding: 0.7rem;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
+            margin-bottom: 0.5rem;
             font-weight: 500;
             font-size: 0.9rem;
         }
 
-        .role-option input:checked + .role-label {
-            background-color: var(--sage);
-            color: white;
-            border-color: var(--sage);
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1.5px solid #eee;
+            border-radius: 10px;
+            outline: none;
+            transition: 0.3s;
+            font-size: 1rem;
         }
 
-        /* Bouton Action */
-        .btn-submit {
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--caramel);
+        }
+
+        .submit-btn {
             width: 100%;
             padding: 1rem;
             background-color: var(--caramel);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 1rem;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: 0.3s;
             margin-top: 1rem;
         }
 
-        .btn-submit:hover {
-            background-color: var(--caramel-dark);
+        .submit-btn:hover {
+            background-color: #b06a45;
+            transform: translateY(-2px);
         }
 
-        .footer-note {
+        .role-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .role-option {
+            flex: 1;
             text-align: center;
-            margin-top: 1.5rem;
-            font-size: 0.85rem;
-            color: var(--gray);
         }
 
-        .footer-note span {
-            color: var(--caramel);
-            font-weight: bold;
+        .role-option input {
+            display: none;
         }
 
-        /* Responsive */
-        @media (max-width: 480px) {
-            .auth-card {
-                box-shadow: none;
-                border-radius: 0;
-            }
-            body {
-                background-color: var(--white);
-            }
+        .role-label {
+            display: block;
+            padding: 0.8rem;
+            border: 1.5px solid #eee;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .role-option input:checked + .role-label {
+            border-color: var(--sage);
+            background-color: #f1f5f0;
+            color: var(--sage);
+            font-weight: 600;
+        }
+
+        .payment-hint {
+            font-size: 0.75rem;
+            color: #888;
+            margin-top: 4px;
         }
     </style>
 </head>
 <body>
 
-    <header>
+    <header class="header">
         <a href="index.html" class="logo">
-            <span style="font-size: 1.8rem;">🥐</span> SaveBite Yaoundé
+            🥐 SaveBite Yaoundé
         </a>
-        <a href="index.html" class="btn-back">← Retour</a>
+        <a href="index.html" class="back-link">← Retour à l'accueil</a>
     </header>
 
-    <main>
-        <div class="auth-card">
-            <div class="tabs">
-                <div class="tab active" onclick="switchTab('login')">Connexion</div>
-                <div class="tab" onclick="switchTab('register')">Créer un compte</div>
-            </div>
+    <div class="auth-card">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('login')">Se connecter</button>
+            <button class="tab-btn" onclick="switchTab('register')">S'inscrire</button>
+        </div>
 
+        <div class="form-container">
             <!-- Formulaire Connexion -->
-            <div id="login-form" class="form-container active">
-                <form onsubmit="handleAuth(event, 'login')">
-                    <div class="form-group">
-                        <label for="login-email">Email</label>
-                        <input type="email" id="login-email" placeholder="votre@email.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="login-pass">Mot de passe</label>
-                        <input type="password" id="login-pass" placeholder="••••••••" required>
-                    </div>
-                    <button type="submit" class="btn-submit">Se connecter</button>
-                </form>
-                <p class="footer-note">Ravi de vous revoir sur <span>SaveBite</span>.</p>
-            </div>
+            <form id="loginForm" class="auth-form active" onsubmit="handleAuth(event, 'login')">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="votre@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Mot de passe</label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="submit-btn">Connexion</button>
+            </form>
 
             <!-- Formulaire Inscription -->
-            <div id="register-form" class="form-container">
-                <form onsubmit="handleAuth(event, 'register')">
-                    <label>Je suis un :</label>
+            <form id="registerForm" class="auth-form" onsubmit="handleAuth(event, 'register')">
+                <div class="form-group">
+                    <label>Vous êtes ?</label>
                     <div class="role-selector">
                         <div class="role-option">
-                            <input type="radio" name="role" id="role-client" value="client" checked>
-                            <label for="role-client" class="role-label">Client</label>
+                            <input type="radio" name="role" value="client" id="roleClient" checked>
+                            <label for="roleClient" class="role-label">Client</label>
                         </div>
                         <div class="role-option">
-                            <input type="radio" name="role" id="role-merchant" value="merchant">
-                            <label for="role-merchant" class="role-label">Commerçant</label>
+                            <input type="radio" name="role" value="merchant" id="roleMerchant">
+                            <label for="roleMerchant" class="role-label">Commerçant</label>
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <label for="reg-name">Nom complet / Nom d'enseigne</label>
-                        <input type="text" id="reg-name" placeholder="Ex: Jean Douala ou Boulangerie du Centre" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="reg-phone">Numéro de téléphone (MTN / Orange Money)</label>
-                        <input type="tel" id="reg-phone" placeholder="6xx xxx xxx" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="reg-email">Email</label>
-                        <input type="email" id="reg-email" placeholder="votre@email.com" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="reg-pass">Mot de passe</label>
-                        <input type="password" id="reg-pass" placeholder="Minimum 8 caractères" required>
-                    </div>
-
-                    <button type="submit" class="btn-submit">Créer mon compte</button>
-                </form>
-                <p class="footer-note">En vous inscrivant, vous aidez à réduire le gaspillage à Yaoundé.</p>
-            </div>
+                </div>
+                <div class="form-group">
+                    <label>Nom complet</label>
+                    <input type="text" placeholder="Ex: Jean Douala" required>
+                </div>
+                <div class="form-group">
+                    <label>Téléphone</label>
+                    <input type="tel" placeholder="6xx xxx xxx" required>
+                    <p class="payment-hint">Compatible MTN & Orange Money</p>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="votre@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Mot de passe</label>
+                    <input type="password" placeholder="Minimum 8 caractères" required>
+                </div>
+                <button type="submit" class="submit-btn">Créer mon compte</button>
+            </form>
         </div>
-    </main>
+    </div>
 
     <script>
         function switchTab(type) {
-            // Update tabs
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            event.target.classList.add('active');
+            const tabs = document.querySelectorAll('.tab-btn');
+            const forms = document.querySelectorAll('.auth-form');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            forms.forEach(form => form.classList.remove('active'));
 
-            // Update forms
-            document.querySelectorAll('.form-container').forEach(f => f.classList.remove('active'));
-            if (type === 'login') {
-                document.getElementById('login-form').classList.add('active');
+            if(type === 'login') {
+                tabs[0].classList.add('active');
+                document.getElementById('loginForm').classList.add('active');
             } else {
-                document.getElementById('register-form').classList.add('active');
+                tabs[1].classList.add('active');
+                document.getElementById('registerForm').classList.add('active');
             }
         }
 
         function handleAuth(event, type) {
             event.preventDefault();
             
-            // Logique de redirection simple pour la démo
             let role = 'client';
             if (type === 'register') {
                 role = document.querySelector('input[name="role"]:checked').value;
             } else {
-                // Pour la connexion simple, on simule un client par défaut 
-                // (Dans une vraie app, cela viendrait de la DB)
+                // Pour la démo login, on simule un choix ou on vérifie le profil
+                // Ici on redirige par défaut vers index, mais un vrai système vérifierait la DB
                 role = 'client'; 
             }
 
+            // Redirection logique
             if (role === 'merchant') {
                 window.location.href = 'merchant.html';
             } else {
