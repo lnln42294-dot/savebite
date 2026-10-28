@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion | SaveBite Yaoundé</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --creme: #FDFBF7;
+            --caramel: #C87D53;
+            --sauge: #8A9A86;
+            --dark: #2D2D2D;
+            --gray: #e0e0e0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--creme);
+            color: var(--dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        header {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: var(--sauge);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--caramel);
+        }
+
+        .logo span {
+            color: var(--sauge);
+        }
+
+        .auth-card {
+            background: white;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            overflow: hidden;
+            border: 1px solid rgba(200, 125, 83, 0.1);
+        }
+
+        .tabs {
+            display: flex;
+            background: #f8f8f8;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #888;
+            transition: 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn.active {
+            color: var(--caramel);
+            background: white;
+            border-bottom: 2px solid var(--caramel);
+        }
+
+        .form-container {
+            padding: 30px;
+        }
+
+        form {
+            display: none;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        form.active {
+            display: flex;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--sauge);
+        }
+
+        input, select {
+            padding: 12px;
+            border: 1px solid var(--gray);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--caramel);
+        }
+
+        .role-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .role-option {
+            position: relative;
+        }
+
+        .role-option input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .role-label {
+            display: block;
+            text-align: center;
+            padding: 10px;
+            border: 1px solid var(--gray);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+
+        .role-option input:checked + .role-label {
+            background-color: var(--sauge);
+            color: white;
+            border-color: var(--sauge);
+        }
+
+        .btn-submit {
+            background-color: var(--caramel);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #b06a43;
+            transform: translateY(-2px);
+        }
+
+        .footer-text {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #999;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-link">← Accueil</a>
+        <div class="logo">SaveBite<span>.Yde</span></div>
+    </header>
+
+    <div class="auth-card">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('login')">Se connecter</button>
+            <button class="tab-btn" onclick="switchTab('signup')">S'inscrire</button>
+        </div>
+
+        <div class="form-container">
+            <!-- Formulaire de Connexion -->
+            <form id="loginForm" class="active" onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <label>Email ou Téléphone</label>
+                    <input type="text" placeholder="votre@email.com" required>
+                </div>
+                <div class="input-group">
+                    <label>Mot de passe</label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-submit">Connexion</button>
+                <p class="footer-text">Connexion sécurisée via SaveBite Cloud</p>
+            </form>
+
+            <!-- Formulaire d'Inscription -->
+            <form id="signupForm" onsubmit="handleSignup(event)">
+                <div class="input-group">
+                    <label>Type de profil</label>
+                    <div class="role-selector">
+                        <div class="role-option">
+                            <input type="radio" id="role-client" name="role" value="client" checked>
+                            <label for="role-client" class="role-label">Client</label>
+                        </div>
+                        <div class="role-option">
+                            <input type="radio" id="role-merchant" name="role" value="merchant">
+                            <label for="role-merchant" class="role-label">Commerçant</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Nom complet / Nom Boutique</label>
+                    <input type="text" placeholder="Jean Dupont ou Boulangerie Centrale" required>
+                </div>
+                <div class="input-group">
+                    <label>Téléphone (MTN / Orange Money)</label>
+                    <input type="tel" placeholder="6xx xxx xxx" required>
+                </div>
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="contact@domaine.com" required>
+                </div>
+                <div class="input-group">
+                    <label>Mot de passe</label>
+                    <input type="password" placeholder="Minimum 8 caractères" required>
+                </div>
+                <button type="submit" class="btn-submit">Créer mon compte</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(type) {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const tabs = document.querySelectorAll('.tab-btn');
+
+            if (type === 'login') {
+                loginForm.classList.add('active');
+                signupForm.classList.remove('active');
+                tabs[0].classList.add('active');
+                tabs[1].classList.remove('active');
+            } else {
+                signupForm.classList.add('active');
+                loginForm.classList.remove('active');
+                tabs[1].classList.add('active');
+                tabs[0].classList.remove('active');
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            // Simulation de redirection - Dans un vrai cas, on vérifierait le type d'utilisateur en DB
+            // Ici, par défaut on redirige vers index.html
+            alert("Connexion réussie !");
+            window.location.href = 'index.html';
+        }
+
+        function handleSignup(e) {
+            e.preventDefault();
+            const role = document.querySelector('input[name="role"]:checked').value;
+            
+            alert("Compte créé avec succès !");
+            
+            if (role === 'merchant') {
+                window.location.href = 'merchant.html';
+            } else {
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html>
