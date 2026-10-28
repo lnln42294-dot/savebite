@@ -4,294 +4,353 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SaveBite - Sauvez des délices</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>SaveBite - Anti-Gaspi</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        creme: '#FDFBF7',
-                        caramel: '#C87D53',
-                        sauge: '#8A9A86',
-                        'sauge-dark': '#6B7A68',
-                    }
-                }
-            }
-        }
-    </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-        body { font-family: 'Poppins', sans-serif; background-color: #FDFBF7; }
-        .view { display: none; }
-        .view.active { display: block; }
-        .nav-item.active { color: #C87D53; }
+        :root {
+            --creme: #FDFBF7;
+            --caramel: #C87D53;
+            --sauge: #8A9A86;
+            --noir: #2D2D2D;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--creme);
+            color: var(--noir);
+            padding-bottom: 80px;
+        }
+
+        header {
+            background-color: white;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            color: var(--caramel);
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .container {
+            padding: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Onglets */
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Cartes Boutiques */
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 150px;
+            background-color: #ddd;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 15px;
+        }
+
+        .card-tag {
+            background-color: var(--sauge);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .card-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .card-price {
+            color: var(--caramel);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .btn-detail {
+            background-color: var(--caramel);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            width: 100%;
+            margin-top: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Section Commandes & QR Code */
+        .order-active {
+            text-align: center;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            border: 2px dashed var(--caramel);
+        }
+
+        .qr-container {
+            margin: 20px auto;
+            padding: 15px;
+            background: white;
+            display: inline-block;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .qr-container img {
+            display: block;
+        }
+
+        .order-status {
+            color: var(--sauge);
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .order-id {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 10px;
+        }
+
+        /* Navigation basse */
+        nav.bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            z-index: 100;
+        }
+
+        .nav-item {
+            text-align: center;
+            color: #ccc;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .nav-item.active {
+            color: var(--caramel);
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: var(--creme);
+            margin: 15% auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 20px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: #888;
+        }
     </style>
 </head>
-<body class="text-gray-800 pb-20">
+<body>
 
-    <!-- Header -->
-    <header class="bg-creme sticky top-0 z-40 px-6 py-4 flex justify-between items-center border-b border-gray-100">
-        <div>
-            <h1 class="text-2xl font-bold text-caramel">SaveBite</h1>
-            <p class="text-xs text-sauge flex items-center"><i class="fas fa-location-dot mr-1"></i> Paris, France</p>
-        </div>
-        <button class="bg-sauge text-white p-2 rounded-full h-10 w-10 flex items-center justify-center">
-            <i class="fas fa-sliders"></i>
-        </button>
-    </header>
+<header>
+    <h1>SaveBite</h1>
+</header>
 
-    <!-- Main Content Containers -->
-    <main class="max-w-md mx-auto px-6 pt-4">
+<div class="container">
+    <!-- ONGLET BOUTIQUE -->
+    <div id="tab-boutique" class="tab-content active">
+        <h2 style="margin-bottom: 20px;">Paniers disponibles</h2>
         
-        <!-- VIEW: ACCUEIL -->
-        <section id="view-home" class="view active">
-            <div class="mb-6">
-                <div class="relative">
-                    <input type="text" placeholder="Rechercher un panier..." class="w-full bg-white border border-gray-200 rounded-2xl py-3 px-11 focus:outline-none focus:ring-2 focus:ring-sauge/30">
-                    <i class="fas fa-search absolute left-4 top-4 text-gray-400"></i>
-                </div>
+        <div class="card" onclick="openModal('Boulangerie Louise', 'Panier Surprise Salé/Sucré', '4.99€', 'Louise-001')">
+            <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80" class="card-img" alt="Boulangerie">
+            <div class="card-body">
+                <span class="card-tag">À récupérer avant 19h</span>
+                <div class="card-title">Boulangerie Louise</div>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">Mix de viennoiseries et pains du jour.</p>
+                <div class="card-price">4,99 € <span style="text-decoration: line-through; font-size: 0.9rem; color: #999; font-weight: normal;">15,00 €</span></div>
+                <button class="btn-detail">Voir les détails</button>
             </div>
+        </div>
 
-            <div class="flex space-x-3 mb-8 overflow-x-auto pb-2 no-scrollbar">
-                <button class="bg-caramel text-white px-4 py-2 rounded-full whitespace-nowrap">Tout</button>
-                <button class="bg-white border border-gray-200 px-4 py-2 rounded-full whitespace-nowrap">Boulangerie</button>
-                <button class="bg-white border border-gray-200 px-4 py-2 rounded-full whitespace-nowrap">Fruits & Légumes</button>
-                <button class="bg-white border border-gray-200 px-4 py-2 rounded-full whitespace-nowrap">Plats cuisinés</button>
-            </div>
-
-            <h2 class="text-xl font-semibold mb-4">À proximité de vous</h2>
-            
-            <div class="space-y-6">
-                <!-- Basket Card 1 -->
-                <div onclick="openModal('Le Fournil Bio', '4.50€', '12.00€', '3 baguettes tradition, 2 croissants, 1 pain au chocolat.', 'Conserver dans un sac en tissu à température ambiante.', '18:30 - 19:15', '12 Rue des Boulangers, 75005 Paris')" class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 cursor-pointer transform transition active:scale-95">
-                    <div class="relative h-40">
-                        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=500" class="w-full h-full object-cover">
-                        <span class="absolute top-3 left-3 bg-sauge text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">3 restants</span>
-                    </div>
-                    <div class="p-4">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h3 class="font-bold text-lg">Le Fournil Bio</h3>
-                                <p class="text-sm text-gray-500">Boulangerie • 400m</p>
-                            </div>
-                            <div class="text-right">
-                                <span class="text-caramel font-bold text-lg">4.50€</span>
-                                <p class="text-xs text-gray-400 line-through">12.00€</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Basket Card 2 -->
-                <div onclick="openModal('Le Marché Frais', '5.90€', '18.00€', 'Assortiment de carottes, tomates grappes, 1 mangue mûre, épinards.', 'Placer les légumes au bac à légumes du frigo.', '19:00 - 20:00', '45 Avenue de la République, 75011 Paris')" class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 cursor-pointer transform transition active:scale-95">
-                    <div class="relative h-40">
-                        <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=500" class="w-full h-full object-cover">
-                        <span class="absolute top-3 left-3 bg-caramel text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">Dernier article !</span>
-                    </div>
-                    <div class="p-4">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h3 class="font-bold text-lg">Le Marché Frais</h3>
-                                <p class="text-sm text-gray-500">Primeur • 1.2km</p>
-                            </div>
-                            <div class="text-right">
-                                <span class="text-caramel font-bold text-lg">5.90€</span>
-                                <p class="text-xs text-gray-400 line-through">18.00€</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- VIEW: FAVORIS -->
-        <section id="view-favorites" class="view">
-            <h2 class="text-2xl font-bold mb-6">Mes Favoris</h2>
-            <div class="flex flex-col items-center justify-center py-20 text-center">
-                <div class="bg-gray-100 p-6 rounded-full mb-4">
-                    <i class="fas fa-heart text-gray-300 text-4xl"></i>
-                </div>
-                <p class="text-gray-500">Aucun favori pour le moment.<br>Sauvez des commerces pour les retrouver ici !</p>
-            </div>
-        </section>
-
-        <!-- VIEW: COMMANDES -->
-        <section id="view-orders" class="view">
-            <h2 class="text-2xl font-bold mb-6">Mes Commandes</h2>
-            <div class="space-y-4">
-                <div class="bg-white p-4 rounded-2xl border border-gray-100 flex items-center">
-                    <div class="w-12 h-12 bg-sauge/20 rounded-xl flex items-center justify-center text-sauge mr-4">
-                        <i class="fas fa-check"></i>
-                    </div>
-                    <div class="flex-1">
-                        <h4 class="font-bold">Boulangerie Louise</h4>
-                        <p class="text-xs text-gray-500">14 Oct. 2023 • 3.99€</p>
-                    </div>
-                    <button class="text-caramel text-sm font-semibold">Détails</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- VIEW: PROFIL -->
-        <section id="view-profile" class="view">
-            <h2 class="text-2xl font-bold mb-6">Profil</h2>
-            <div class="flex items-center space-x-4 mb-8">
-                <div class="w-20 h-20 rounded-full bg-sauge flex items-center justify-center text-white text-3xl font-bold">JD</div>
-                <div>
-                    <h3 class="text-xl font-bold">Jean Dupont</h3>
-                    <p class="text-sm text-gray-500">jean.dupont@email.com</p>
-                </div>
-            </div>
-            <div class="space-y-2">
-                <div class="flex items-center p-4 bg-white rounded-2xl border border-gray-100">
-                    <i class="fas fa-leaf text-sauge mr-4 w-5"></i>
-                    <span class="flex-1">Impact écologique</span>
-                    <span class="font-bold text-sauge">-12kg CO2</span>
-                </div>
-                <div class="flex items-center p-4 bg-white rounded-2xl border border-gray-100">
-                    <i class="fas fa-wallet text-gray-400 mr-4 w-5"></i>
-                    <span class="flex-1">Paiement</span>
-                    <i class="fas fa-chevron-right text-gray-300"></i>
-                </div>
-                <div class="flex items-center p-4 bg-white rounded-2xl border border-gray-100">
-                    <i class="fas fa-gear text-gray-400 mr-4 w-5"></i>
-                    <span class="flex-1">Paramètres</span>
-                    <i class="fas fa-chevron-right text-gray-300"></i>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- MODAL -->
-    <div id="modal-overlay" class="fixed inset-0 bg-black/50 z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4 transition-opacity">
-        <div id="modal-content" class="bg-creme w-full max-w-md rounded-t-[2.5rem] sm:rounded-[2.5rem] overflow-hidden transform translate-y-full transition-transform duration-300">
-            <div class="relative h-56">
-                <button onclick="closeModal()" class="absolute top-4 right-4 bg-white/80 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center text-gray-800 z-10">
-                    <i class="fas fa-times"></i>
-                </button>
-                <img id="m-img" src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=500" class="w-full h-full object-cover">
-            </div>
-            <div class="p-8">
-                <div class="flex justify-between items-start mb-4">
-                    <h2 id="m-title" class="text-2xl font-bold">Nom du Commerce</h2>
-                    <div class="text-right">
-                        <span id="m-price" class="text-2xl font-bold text-caramel">0.00€</span>
-                        <p id="m-old-price" class="text-sm text-gray-400 line-through">0.00€</p>
-                    </div>
-                </div>
-
-                <div class="space-y-6">
-                    <div>
-                        <h4 class="text-sm font-bold uppercase tracking-wider text-sauge mb-2">Contenu du panier</h4>
-                        <p id="m-items" class="text-gray-600 bg-white p-3 rounded-xl border border-gray-100">Détails des produits...</p>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-sauge/10 p-3 rounded-xl">
-                            <h4 class="text-xs font-bold uppercase text-sauge-dark mb-1">⏰ Créneau</h4>
-                            <p id="m-time" class="text-sm font-semibold">18:00 - 19:00</p>
-                        </div>
-                        <div class="bg-caramel/10 p-3 rounded-xl">
-                            <h4 class="text-xs font-bold uppercase text-caramel mb-1">💡 Conservation</h4>
-                            <p id="m-tips" class="text-xs">Conserver au frais.</p>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h4 class="text-sm font-bold uppercase tracking-wider text-sauge mb-2">Adresse de collecte</h4>
-                        <p id="m-address" class="text-sm text-gray-600 flex items-start">
-                            <i class="fas fa-map-marker-alt mt-1 mr-2 text-caramel"></i>
-                            <span>Adresse complète ici.</span>
-                        </p>
-                    </div>
-
-                    <button class="w-full bg-caramel text-white py-4 rounded-2xl font-bold shadow-lg shadow-caramel/30 hover:bg-opacity-90 transition transform active:scale-95">
-                        Réserver ce panier
-                    </button>
-                </div>
+        <div class="card" onclick="openModal('Bio C Bon', 'Panier Fruits & Légumes Moches', '5.50€', 'Bio-002')">
+            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80" class="card-img" alt="Bio">
+            <div class="card-body">
+                <span class="card-tag">À récupérer avant 20h</span>
+                <div class="card-title">Bio C' Bon</div>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">3kg de fruits et légumes de saison.</p>
+                <div class="card-price">5,50 € <span style="text-decoration: line-through; font-size: 0.9rem; color: #999; font-weight: normal;">18,00 €</span></div>
+                <button class="btn-detail">Voir les détails</button>
             </div>
         </div>
     </div>
 
-    <!-- Bottom Navigation -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 px-8 py-3 flex justify-between items-center z-40 max-w-md mx-auto">
-        <button onclick="showView('home')" class="nav-item active flex flex-col items-center">
-            <i class="fas fa-house text-xl"></i>
-            <span class="text-[10px] mt-1 font-medium">Accueil</span>
-        </button>
-        <button onclick="showView('favorites')" class="nav-item flex flex-col items-center text-gray-400">
-            <i class="fas fa-heart text-xl"></i>
-            <span class="text-[10px] mt-1 font-medium">Favoris</span>
-        </button>
-        <button onclick="showView('orders')" class="nav-item flex flex-col items-center text-gray-400">
-            <i class="fas fa-bag-shopping text-xl"></i>
-            <span class="text-[10px] mt-1 font-medium">Commandes</span>
-        </button>
-        <button onclick="showView('profile')" class="nav-item flex flex-col items-center text-gray-400">
-            <i class="fas fa-user text-xl"></i>
-            <span class="text-[10px] mt-1 font-medium">Profil</span>
-        </button>
-    </nav>
-
-    <script>
-        // Navigation Logic
-        function showView(viewId) {
-            // Hide all views
-            document.querySelectorAll('.view').forEach(view => {
-                view.classList.remove('active');
-            });
-            // Show selected view
-            document.getElementById('view-' + viewId).classList.add('active');
+    <!-- ONGLET COMMANDES -->
+    <div id="tab-commandes" class="tab-content">
+        <h2 style="margin-bottom: 20px;">Mes réservations</h2>
+        
+        <!-- Affiché si une commande est active -->
+        <div id="active-order" class="order-active">
+            <div class="order-status">
+                <i class="fas fa-check-circle"></i> Commande prête à être retirée
+            </div>
+            <h3>Boulangerie Louise</h3>
+            <p style="margin-top: 5px; color: #666;">Présentez ce QR Code au commerçant pour valider votre retrait.</p>
             
-            // Update nav icons
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active', 'text-caramel');
-                item.classList.add('text-gray-400');
-            });
-            event.currentTarget.classList.add('active', 'text-caramel');
-            event.currentTarget.classList.remove('text-gray-400');
-        }
-
-        // Modal Logic
-        const overlay = document.getElementById('modal-overlay');
-        const content = document.getElementById('modal-content');
-
-        function openModal(title, price, oldPrice, items, tips, time, address) {
-            document.getElementById('m-title').innerText = title;
-            document.getElementById('m-price').innerText = price;
-            document.getElementById('m-old-price').innerText = oldPrice;
-            document.getElementById('m-items').innerText = items;
-            document.getElementById('m-tips').innerText = tips;
-            document.getElementById('m-time').innerText = time;
-            document.getElementById('m-address').querySelector('span').innerText = address;
+            <div class="qr-container">
+                <!-- Génération dynamique du QR Code via l'ID de commande -->
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=SAVEBITE-CMD-88241" alt="Bon de retrait QR Code">
+            </div>
             
-            // Set image based on title (mock)
-            const img = document.getElementById('m-img');
-            img.src = title.includes('Fournil') ? 
-                'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=500' : 
-                'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=500';
+            <p style="font-weight: bold; color: var(--caramel);">Code : SB-88241</p>
+            <div class="order-id">ID Commande : #88241592</div>
+            <hr style="margin: 15px 0; border: 0; border-top: 1px solid #eee;">
+            <p style="font-size: 0.9rem; text-align: left;">
+                <i class="fas fa-clock"></i> <strong>Heure limite :</strong> Aujourd'hui, 19h00<br>
+                <i class="fas fa-map-marker-alt"></i> 12 Rue de la Paix, 75002 Paris
+            </p>
+        </div>
 
-            overlay.classList.remove('hidden');
-            setTimeout(() => {
-                content.classList.remove('translate-y-full');
-            }, 10);
+        <!-- État vide (caché par défaut si une commande existe) -->
+        <div id="no-order" class="empty-state" style="display:none;">
+            <i class="fas fa-shopping-bag" style="font-size: 3rem; margin-bottom: 15px;"></i>
+            <p>Vous n'avez aucune commande en cours.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Détails -->
+<div id="detailModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <h2 id="modalTitle" style="color: var(--caramel); margin-bottom: 10px;">Détails</h2>
+        <p id="modalDesc" style="margin-bottom: 15px;"></p>
+        <div style="background: #f0f0f0; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+            <p><strong>Contenu :</strong> Peut contenir du gluten, des produits laitiers et des fruits à coque.</p>
+            <p style="margin-top:10px;"><strong>Prix total :</strong> <span id="modalPrice"></span></p>
+        </div>
+        <button class="btn-detail" onclick="simulerAchat()">Réserver ce panier</button>
+    </div>
+</div>
+
+<nav class="bottom-nav">
+    <div class="nav-item active" onclick="switchTab('boutique')">
+        <i class="fas fa-store"></i>
+        <span>Boutique</span>
+    </div>
+    <div class="nav-item" onclick="switchTab('commandes')">
+        <i class="fas fa-receipt"></i>
+        <span>Commandes</span>
+    </div>
+    <div class="nav-item">
+        <i class="fas fa-user"></i>
+        <span>Profil</span>
+    </div>
+</nav>
+
+<script>
+    function switchTab(tabName) {
+        // Gérer les classes actives de la nav
+        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+
+        // Gérer l'affichage du contenu
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.getElementById('tab-' + tabName).classList.add('active');
+    }
+
+    function openModal(title, desc, price, id) {
+        document.getElementById('modalTitle').innerText = title;
+        document.getElementById('modalDesc').innerText = desc;
+        document.getElementById('modalPrice').innerText = price;
+        document.getElementById('detailModal').style.display = "block";
+    }
+
+    function closeModal() {
+        document.getElementById('detailModal').style.display = "none";
+    }
+
+    function simulerAchat() {
+        alert("Réservation confirmée ! Retrouvez votre QR Code dans l'onglet 'Commandes'.");
+        closeModal();
+        switchTab('commandes');
+        // Dans une vraie app, on mettrait à jour l'état ici pour afficher le bloc active-order
+    }
+
+    // Fermer la modale en cliquant à côté
+    window.onclick = function(event) {
+        let modal = document.getElementById('detailModal');
+        if (event.target == modal) {
+            closeModal();
         }
-
-        function closeModal() {
-            content.classList.add('translate-y-full');
-            setTimeout(() => {
-                overlay.classList.add('hidden');
-            }, 300);
-        }
-
-        // Close on overlay click
-        overlay.addEventListener('click', (e) => {
-            if(e.target === overlay) closeModal();
-        });
-    </script>
+    }
+</script>
 
 </body>
 </html>
