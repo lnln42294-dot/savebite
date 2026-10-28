@@ -1,0 +1,276 @@
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaveBite Yaoundé - Espace Commerçant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        caramel: '#C87D53',
+                        sage: '#8A9A86',
+                        cream: '#FDFBF7',
+                        'caramel-dark': '#A6643F',
+                        'sage-dark': '#6B7B68',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        body { font-family: 'Poppins', sans-serif; background-color: #FDFBF7; }
+        .tab-active { border-bottom: 3px solid #C87D53; color: #C87D53; }
+    </style>
+</head>
+<body class="text-gray-800 pb-20">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="bg-caramel p-2 rounded-lg">
+                    <i class="fas fa-store text-white text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-xl text-gray-900 leading-none">Boulangerie du Lac</h1>
+                    <span class="text-xs text-sage font-medium uppercase tracking-wider">Yaoundé, Bastos</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-tighter">Ouvert</span>
+                <button class="text-gray-400 hover:text-caramel transition-colors">
+                    <i class="fas fa-bell text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="max-w-5xl mx-auto px-4 flex border-t border-gray-100">
+            <button onclick="switchTab('paniers')" id="tab-paniers" class="flex-1 py-4 text-sm font-semibold text-gray-500 tab-active transition-all">
+                <i class="fas fa-shopping-basket mr-2"></i>Mes Paniers
+            </button>
+            <button onclick="switchTab('commandes')" id="tab-commandes" class="flex-1 py-4 text-sm font-semibold text-gray-500 transition-all">
+                <i class="fas fa-clipboard-list mr-2"></i>Commandes
+            </button>
+            <button onclick="switchTab('profil')" id="tab-profil" class="flex-1 py-4 text-sm font-semibold text-gray-500 transition-all">
+                <i class="fas fa-chart-line mr-2"></i>Performance
+            </button>
+        </nav>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-6">
+
+        <!-- SECTION 1: GESTION DES PANIERS -->
+        <section id="section-paniers" class="space-y-8">
+            <!-- Formulaire d'ajout -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                    <i class="fas fa-plus-circle text-caramel"></i> Publier un nouveau panier
+                </h2>
+                <form class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Nom du panier</label>
+                            <input type="text" placeholder="Ex: Mix Viennoiseries du Matin" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-caramel focus:border-caramel outline-none transition-all">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Prix Promo (FCFA)</label>
+                                <input type="number" placeholder="2000" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-caramel outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Valeur Réelle</label>
+                                <input type="number" placeholder="5000" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-caramel outline-none">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Quantité disponible</label>
+                            <input type="number" placeholder="5" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-caramel outline-none">
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">URL de l'image (ou Import)</label>
+                            <div class="flex gap-2">
+                                <input type="text" placeholder="https://image-url.com/photo.jpg" class="flex-1 px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-caramel outline-none">
+                                <button type="button" class="bg-gray-100 px-4 rounded-xl text-gray-600 hover:bg-gray-200"><i class="fas fa-camera"></i></button>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Description</label>
+                            <textarea rows="4" placeholder="Décrivez le contenu surprise..." class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-caramel outline-none"></textarea>
+                        </div>
+                    </div>
+                    <div class="md:col-span-2">
+                        <button type="submit" class="w-full bg-caramel hover:bg-caramel-dark text-white font-bold py-4 rounded-xl shadow-lg transition-all transform active:scale-95">
+                            Mettre en ligne le panier
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Liste des paniers actifs -->
+            <div>
+                <h2 class="text-lg font-bold mb-4">Paniers en ligne actuellement</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Card 1 -->
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
+                        <div class="relative h-40">
+                            <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=500" class="w-full h-full object-cover" alt="Pain">
+                            <span class="absolute top-2 right-2 bg-sage text-white text-xs font-bold px-2 py-1 rounded">3 restants</span>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-900">Panier Traditionnel</h3>
+                            <p class="text-sm text-gray-500 mb-3">Baguettes, croissants, pains au chocolat.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-caramel font-bold">1 500 FCFA</span>
+                                <button class="text-red-500 text-sm font-medium hover:underline">Désactiver</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
+                        <div class="relative h-40">
+                            <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&q=80&w=500" class="w-full h-full object-cover" alt="Pâtisserie">
+                            <span class="absolute top-2 right-2 bg-sage text-white text-xs font-bold px-2 py-1 rounded">1 restant</span>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-900">Surprise Pâtissière</h3>
+                            <p class="text-sm text-gray-500 mb-3">Mix de gâteaux du jour et tartelettes.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-caramel font-bold">3 000 FCFA</span>
+                                <button class="text-red-500 text-sm font-medium hover:underline">Désactiver</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: COMMANDES & RETRAITS -->
+        <section id="section-commandes" class="hidden">
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="p-6 border-b border-gray-100 flex justify-between items-center">
+                    <h2 class="text-lg font-bold text-gray-900">Retraits du jour</h2>
+                    <div class="flex gap-2">
+                        <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-bold">5 À RÉCUPÉRER</span>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-50 text-gray-500 text-xs uppercase">
+                            <tr>
+                                <th class="px-6 py-4 font-semibold">Client</th>
+                                <th class="px-6 py-4 font-semibold">Commande</th>
+                                <th class="px-6 py-4 font-semibold">Code / Statut</th>
+                                <th class="px-6 py-4 font-semibold">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <tr>
+                                <td class="px-6 py-4">
+                                    <div class="font-bold text-gray-900">Samuel Eto'o</div>
+                                    <div class="text-xs text-gray-500">Prévu à 17:30</div>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-600">1x Panier Traditionnel</td>
+                                <td class="px-6 py-4">
+                                    <span class="bg-blue-50 text-blue-600 px-3 py-1 rounded-lg font-mono font-bold">#SB-992</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <button class="bg-sage hover:bg-sage-dark text-white text-sm font-bold px-4 py-2 rounded-lg transition-colors">Valider</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4">
+                                    <div class="font-bold text-gray-900">Marie Ngo</div>
+                                    <div class="text-xs text-gray-500">Prévu à 18:00</div>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-600">2x Surprise Pâtissière</td>
+                                <td class="px-6 py-4">
+                                    <span class="bg-blue-50 text-blue-600 px-3 py-1 rounded-lg font-mono font-bold">#SB-104</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <button class="bg-sage hover:bg-sage-dark text-white text-sm font-bold px-4 py-2 rounded-lg transition-colors">Valider</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: PERFORMANCE / VENTES -->
+        <section id="section-profil" class="hidden space-y-6">
+            <!-- Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-caramel">
+                    <p class="text-sm text-gray-500 font-medium">Revenu total (Mois)</p>
+                    <p class="text-3xl font-bold text-gray-900 mt-1">145 000 <span class="text-sm font-normal">FCFA</span></p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-sage">
+                    <p class="text-sm text-gray-500 font-medium">Paniers sauvés</p>
+                    <p class="text-3xl font-bold text-gray-900 mt-1">84</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-gray-800">
+                    <p class="text-sm text-gray-500 font-medium">Nourriture économisée</p>
+                    <p class="text-3xl font-bold text-gray-900 mt-1">42 <span class="text-sm font-normal">kg</span></p>
+                </div>
+            </div>
+
+            <!-- Historique des ventes -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                <h2 class="text-lg font-bold mb-4">Historique récent des ventes</h2>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center p-4 bg-cream rounded-xl">
+                        <div>
+                            <p class="font-bold">Vente du 24 Octobre</p>
+                            <p class="text-sm text-gray-500">12 paniers vendus</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-caramel font-bold">+ 18 000 FCFA</p>
+                            <p class="text-xs text-sage font-bold">Payé</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center p-4 bg-cream rounded-xl">
+                        <div>
+                            <p class="font-bold">Vente du 23 Octobre</p>
+                            <p class="text-sm text-gray-500">8 paniers vendus</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-caramel font-bold">+ 12 000 FCFA</p>
+                            <p class="text-xs text-sage font-bold">Payé</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="w-full mt-6 py-3 text-sm font-bold text-gray-400 hover:text-caramel transition-colors underline">Voir tout le rapport financier</button>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all sections
+            document.getElementById('section-paniers').classList.add('hidden');
+            document.getElementById('section-commandes').classList.add('hidden');
+            document.getElementById('section-profil').classList.add('hidden');
+
+            // Remove active style from all tabs
+            document.getElementById('tab-paniers').classList.remove('tab-active');
+            document.getElementById('tab-commandes').classList.remove('tab-active');
+            document.getElementById('tab-profil').classList.remove('tab-active');
+
+            // Show target section and activate tab
+            document.getElementById('section-' + tabName).classList.remove('hidden');
+            document.getElementById('tab-' + tabName).classList.add('tab-active');
+        }
+    </script>
+</body>
+</html>
+```
